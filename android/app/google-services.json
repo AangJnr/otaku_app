@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "156674788109",
+    "project_id": "otaku-katarougu",
+    "storage_bucket": "otaku-katarougu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156674788109:android:8f761f0aae1b535f3c7e44",
+        "android_client_info": {
+          "package_name": "com.otaku_katarougu_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156674788109-ts0sh593ricclrdmrhsvmger4umgshmc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaLA_J931fmetc0Trebzxq_d5frwRwe6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156674788109-ts0sh593ricclrdmrhsvmger4umgshmc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
