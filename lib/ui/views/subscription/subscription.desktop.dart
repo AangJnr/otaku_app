@@ -1,11 +1,11 @@
- import 'package:otaku_katarougu_app/ui/common/app_constants.dart';
+import 'package:otaku_katarougu_app/ui/common/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:otaku_katarougu_app/ui/common/ui_helpers.dart';
 import 'package:otaku_katarougu_app/ui/widgets/loading.dart';
 import 'package:stacked/stacked.dart';
- import '../../widgets/footer/links_widget.dart';
+import '../../widgets/footer/links_widget.dart';
 import '../../widgets/logo_widget.dart';
-import '../../widgets/pager.dart';
+import 'pager.dart';
 import 'subscription_model.dart';
 
 const radiusValue = 25.0;
@@ -37,7 +37,7 @@ class SubscriptionDesktop extends ViewModelWidget<SubscriptionModel> {
                   shadowColor: Colors.black38,
                   elevation: 10,
                   borderRadius: borderRadius,
-                  color:  Colors.white,
+                  color: Colors.white,
                   child: SizedBox(
                     height: double.infinity,
                     width: double.infinity,
@@ -45,6 +45,7 @@ class SubscriptionDesktop extends ViewModelWidget<SubscriptionModel> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        verticalSpaceMedium,
                         RichText(
                           textAlign: TextAlign.center,
                           text: TextSpan(
@@ -87,37 +88,35 @@ class SubscriptionDesktop extends ViewModelWidget<SubscriptionModel> {
                                 color: theme.secondaryTextColor,
                               ),
                         ),
-                        verticalSpaceMedium,
                         Flexible(
                             child: Container(
-                          constraints: const BoxConstraints(maxHeight: 450),
+                          constraints: const BoxConstraints(
+                            minHeight: 450,
+                          ),
                           width: double.infinity,
-                          padding: const EdgeInsets.symmetric(vertical: 30),
+                          padding: const EdgeInsets.symmetric(vertical: 20),
                           margin: const EdgeInsets.symmetric(
                               vertical: 30, horizontal: 60),
                           decoration: BoxDecoration(
                             borderRadius: borderRadius,
                           ),
                           child: viewModel.isBusy
-                              ? LoadingWidget(
-                                 pathBackgroundColor: viewModel
-                                    .appTheme.primaryBackgroundColor,
-                                colors: [viewModel.appTheme.accentColor!],
-                              )
+                              ? LoadingWidget()
                               : const CategoriesPagerWidget(),
                         )),
-
                       ],
                     ),
                   ),
                 ),
-              ),verticalSpaceMedium,
+              ),
+              verticalSpaceMedium,
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Linkswidget(
-                   showFooterLogo: false,
+                  showFooterLogo: false,
                 ),
-              )],
+              )
+            ],
           ),
         ),
       ),

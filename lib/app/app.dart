@@ -13,9 +13,9 @@ import '../data/remote/repository/user_repository_impl.dart';
 import '../domain/api/api_service.dart';
 import '../domain/model/session_manager.dart';
 import '../domain/repository/user_repository.dart';
+import '../ui/dialogs/login_alert/login_alert_dialog.dart';
 import '../ui/dialogs/subscription_alert/subscription_alert_dialog.dart';
-import '../ui/views/profileEdit/profile_edit_view.dart';
-import '../ui/views/workView/work_view.dart';
+ import '../ui/views/workView/work_view.dart';
 import 'services/location_service.dart';
 import 'services/toast_service.dart';
 
@@ -24,12 +24,15 @@ import 'services/toast_service.dart';
   logger: StackedLogger(),
   routes: [
     CustomRoute(page: StartupView, initial: true),
-    CustomRoute(page: ProfileView),
-    CustomRoute(page: ProfileEditView, path:'/my-profile'),
-    CustomRoute(page: WorkView, path:'/relevant-experience'),
+    CustomRoute(page: ProfileView, path: '/me'),
+    //CustomRoute(page: ProfileEditView, path:'/my-profile'),
+    CustomRoute(page: WorkView, path: '/relevant-experience'),
     CustomRoute(page: SubscriptionView),
     // @stacked-route
-    CustomRoute(page: TermsAndPolicyView, path: 'policy',),
+    CustomRoute(
+      page: TermsAndPolicyView,
+      path: 'policy',
+    ),
     CustomRoute(page: TermsAndPolicyView, path: 'terms', name: 'terms'),
     CustomRoute(page: UnknownView, path: '/unknown'),
 
@@ -54,6 +57,8 @@ import 'services/toast_service.dart';
   ],
   dialogs: [
     StackedDialog(classType: SubscriptionAlertDialog),
+    StackedDialog(classType: LoginAlertDialog),
+
     // @stacked-dialog
   ],
 )

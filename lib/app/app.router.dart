@@ -11,7 +11,7 @@ import 'package:stacked_services/stacked_services.dart' as _i8;
 
 import '../domain/model/profile/profile.dart' as _i11;
 import '../ui/views/profile/profile_view.dart' as _i2;
-import '../ui/views/profileEdit/profile_edit_view.dart' as _i3;
+//import '../ui/views/profileEdit/profile_edit_view.dart' as _i3;
 import '../ui/views/startup/startup_view.dart' as _i1;
 import '../ui/views/subscription/subscription.dart' as _i5;
 import '../ui/views/termsAndPolicy/terms_and_policy.dart' as _i6;
@@ -41,19 +41,6 @@ class StackedRouterWeb extends _i9.RootStackRouter {
       return _i9.CustomPage<dynamic>(
         routeData: routeData,
         child: _i2.ProfileView(
-          profile: args.profile,
-          key: args.key,
-        ),
-        opaque: true,
-        barrierDismissible: false,
-      );
-    },
-    ProfileEditViewRoute.name: (routeData) {
-      final args = routeData.argsAs<ProfileEditViewArgs>(
-          orElse: () => const ProfileEditViewArgs());
-      return _i9.CustomPage<dynamic>(
-        routeData: routeData,
-        child: _i3.ProfileEditView(
           profile: args.profile,
           key: args.key,
         ),

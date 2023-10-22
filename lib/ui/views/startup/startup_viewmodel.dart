@@ -8,7 +8,7 @@ import '../../../domain/repository/user_repository.dart';
 class StartupViewModel extends BaseViewModel {
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
-    final key = Uri.base.queryParameters['key'] ?? "";
+    final key = Uri.base.queryParameters['key'] ?? "hj6GwLtpGFluhMOp7eQEnZ0HOOPJ";
 
     final profile =
         await runBusyFuture(locator<UserRepository>().getProfile(key));

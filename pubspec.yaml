@@ -32,7 +32,8 @@ dependencies:
   loading_indicator: ^3.1.1
   firebase_auth: ^4.10.0
   firebase_core: ^2.16.0
-
+  cached_network_image: ^3.2.3
+  flutter_svg: ^2.0.5
 
 dev_dependencies:
   build_runner: ^2.4.5
@@ -51,3 +52,11 @@ flutter:
     - assets/
     - assets/logo/logo_dark.png
     - assets/logo/logo_white.png
+    - assets/icons/facebook.png
+    - assets/icons/instagram.png
+    - assets/icons/gmail.png
+    - assets/icons/phone.png
+    - assets/icons/twitter.png
+    - assets/icons/linkedin.png
+    - assets/icons/snapchat.png
+    - assets/icons/whatsapp.png

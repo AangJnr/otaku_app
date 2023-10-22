@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -10,6 +11,7 @@ import 'package:url_strategy/url_strategy.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import 'config/theme_setup.dart';
+import 'firebase_options.dart';
 import 'ui/common/app_strings.dart';
 
 Future<void> main() async {
@@ -20,7 +22,9 @@ Future<void> main() async {
   await setupLocator(stackedRouter: stackedRouter);
   setupDialogUi();
   setupBottomSheetUi();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
 
   runApp(const MainApp());

@@ -8,7 +8,6 @@ import '../../../app/app.logger.dart';
 import '../../../domain/model/session_manager.dart';
 import '../../../domain/api/api_service.dart';
 import '../../../utils/internet_util.dart';
-import '../../local/session_manager_service.dart';
 
 const TokenExpired = "Token expired";
 mixin BaseRepository {
@@ -28,19 +27,16 @@ mixin BaseRepository {
         var responseBody = response.body;
 
         final dynamic decodedResponseBody = jsonDecode(responseBody);
-        if (response.statusCode >= 400 || decodedResponseBody['success'].toString() == 'false') {
-          // if (response.statusCode == 401) {
-          //   _sessionManager.setAppState(AppState.login);
-          //   return Error(Exception(TokenExpired));
-          // }
+        if (response.statusCode >= 400 ||
+            decodedResponseBody['success'].toString() == 'false') {
           return Error(Exception(parseErrors(decodedResponseBody)));
         }
-        // getLogger("BaseRepository")
-        //     .i("decodedResponseBody data : ${decodedResponseBody['data']}");
+        getLogger("BaseRepository")
+            .i(decodedResponseBody['data']);
         return Success(decodedResponseBody['data']);
       } catch (e) {
         getLogger("Error").e("$e");
-        return Error(Exception(e.toString()));
+        return Error(Exception(parseErrors(e.toString())));
       }
     } else {
       //_toastService.showToast('No internet connection available');
@@ -81,19 +77,11 @@ mixin BaseRepository {
           .trim();
     }
     //{non_field_errors: [Unable to log in with provided credentials.]}
-    getLogger("BaseRepository").e('$errorResponse');
+    getLogger("BaseRepository parseErrors").e('$errorResponse');
 
-    if (errorResponse is Map<String, dynamic>) {
-      return errorResponse.entries
-          .fold("",
-              (previousValue, element) => "$previousValue\n${element.value}")
-          .trim();
-    }
-
-    if (errorResponse.containsKey("non_field_errors")) {
-      return (errorResponse["non_field_errors"] as List<dynamic>)
-          .fold("", (previousValue, element) => "$previousValue\n$element")
-          .trim();
+    if (errorResponse is Map<String, dynamic> &&
+        errorResponse.containsKey("message")) {
+      return (errorResponse["message"] as dynamic);
     }
     return errorResponse.toString();
   }

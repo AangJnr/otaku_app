@@ -43,27 +43,7 @@ ThemeData getTheme(BuildContext context) {
   );
 }
 
-class BlackTheme implements AppTheme {
-  @override
-  Color? primaryBackgroundColor = const Color(0xFFD5D9DD);
-
-  @override
-  Color? secondaryBackgroundColor = const Color(0xFFA3A6A9);
-
-  @override
-  Color? primaryTextColor = const Color(0xFF050505);
-
-  @override
-  Color? secondaryTextColor = const Color(0xFF151515);
-
-  @override
-  Color? accentColor = const Color(0xFF23262A);
-
-  @override
-  Color? panelBackgroundColor = const Color(0xFFA3A6A9);
-}
-
-class SilverTheme implements AppTheme {
+class DefaultTheme implements AppTheme {
   @override
   Color? primaryBackgroundColor = const Color(0xFFEFEFEF);
 
@@ -81,9 +61,26 @@ class SilverTheme implements AppTheme {
 
   @override
   Color? panelBackgroundColor = const Color(0xFFE8E8E8);
+
+  @override
+  Color? tertiaryBackgroundColor = const Color(0xFFE8E8E8);
+
+  @override
+  Color? tertiaryTextColor = const Color(0xFFdbdbdb);
 }
 
-class DefaultTheme implements AppTheme {
+
+class GoldTheme implements AppTheme {
+
+// {
+// 		"primaryBackgroundColor": "#F5F2EF",
+// 		"secondaryBackgroundColor": "#FFFFFF",
+// 		"primaryTextColor": "#5F4329",
+// 		"secondaryTextColor": "#2C2B28",
+// 		"accent": "#D4A626",
+// 		"panelBackgroundColor": "#FFFFFF",
+// 		"tertiaryTextColor": "#2C2B28"
+// 	}
   @override
   Color? primaryBackgroundColor = const Color(0xFFF5F2EF);
 
@@ -101,6 +98,45 @@ class DefaultTheme implements AppTheme {
 
   @override
   Color? panelBackgroundColor = const Color(0xFFFFFFFF);
+
+  @override
+  Color? tertiaryBackgroundColor = const Color(0xFFE8E8E8);
+
+  @override
+  Color? tertiaryTextColor = const Color(0xFF2C2B28);
+}
+
+class BlackTheme implements AppTheme {
+  //"primaryBackgroundColor": "#D5D9DD",
+	//	"secondaryBackgroundColor": "#A3A6A9",
+	//	"primaryTextColor": "#050505",
+		//"accent": "#23262A",
+	//	"secondaryTextColor": "#151515",
+	//	"tertiaryTextColor": "#D7D7D7",
+	//	"panelBackgroundColor": "#A3A6A9"
+  @override
+  Color? primaryBackgroundColor = const Color(0xFFD5D9DD);
+
+  @override
+  Color? secondaryBackgroundColor = const Color(0xFFA3A6A9);
+
+  @override
+  Color? primaryTextColor = const Color(0xFF050505);
+
+  @override
+  Color? secondaryTextColor = const Color(0xFF151515);
+
+  @override
+  Color? accentColor = const Color(0xFF23262A);
+
+  @override
+  Color? panelBackgroundColor = const Color(0xFFA3A6A9);
+
+  @override
+  Color? tertiaryBackgroundColor = const Color(0xFFE8E8E8);
+
+  @override
+  Color? tertiaryTextColor = const Color(0xFFD7D7D7);
 }
 
 class GenericTheme implements AppTheme {
@@ -110,7 +146,9 @@ class GenericTheme implements AppTheme {
       this.secondaryBackgroundColor,
       this.secondaryTextColor,
       this.panelBackgroundColor,
-      this.accentColor});
+      this.accentColor,
+      this.tertiaryBackgroundColor,
+      this.tertiaryTextColor});
   @override
   Color? primaryBackgroundColor;
 
@@ -129,20 +167,30 @@ class GenericTheme implements AppTheme {
   @override
   Color? panelBackgroundColor = const Color(0xFFE1E1E1);
 
+  @override
+  Color? tertiaryBackgroundColor;
+
+  @override
+  Color? tertiaryTextColor;
   factory GenericTheme.fromTheme(AThemeResponse theme) => GenericTheme(
       primaryBackgroundColor: theme.primaryBackgroundColor.hexToColor(),
       primaryTextColor: theme.primaryTextColor.hexToColor(),
       secondaryBackgroundColor: theme.secondaryBackgroundColor.hexToColor(),
       secondaryTextColor: theme.secondaryTextColor.hexToColor(),
       accentColor: theme.accent.hexToColor(),
-      panelBackgroundColor: theme.panelBackgroundColor.hexToColor());
+      panelBackgroundColor: theme.panelBackgroundColor.hexToColor(),
+      tertiaryBackgroundColor: theme.tertiaryBackgroundColor.hexToColor(),
+      tertiaryTextColor: theme.tertiaryTextColor.hexToColor());
 }
 
 abstract class AppTheme {
   Color? primaryBackgroundColor;
   Color? secondaryBackgroundColor;
+  Color? tertiaryBackgroundColor;
+
   Color? primaryTextColor;
   Color? secondaryTextColor;
+  Color? tertiaryTextColor;
   Color? accentColor;
   Color? panelBackgroundColor;
 }

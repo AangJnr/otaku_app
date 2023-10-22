@@ -28,7 +28,7 @@ class ApiServiceImpl implements ApiService {
 
   Map<String, String> getMultiPartHeaders() {
     return {
-      'Authorization': 'Bearer ${_sessionManager.getAccessToken()}',
+      'Authorization': 'Token ${_sessionManager.getAccessToken()}',
       'Content-type': 'multipart/form-data',
       'Accept': '*/*'
     };
@@ -125,14 +125,14 @@ class ApiServiceImpl implements ApiService {
     return request.send();
   }
 
-  @override
-  Future<http.Response> getUser(String uid) {
-    var response = get(
-      User().Profile(uid),
-      headers: getHeaders(isSecure: false),
-    );
-    return response;
-  }
+  // @override
+  // Future<http.Response> getUser(String uid) {
+  //   var response = get(
+  //     User().Profile(uid),
+  //     headers: getHeaders(isSecure: false),
+  //   );
+  //   return response;
+  // }
 
   @override
   Future<http.Response> getProfile(String uid) {
@@ -158,7 +158,8 @@ class ApiServiceImpl implements ApiService {
   @override
   Future<http.Response> subscribe(SubscriptionRequest subscriptionRequest) {
     var response = post(User().Subscribe,
-        headers: getHeaders(isSecure: false), body: subscriptionRequest.toRequest());
+        headers: getHeaders(isSecure: true),
+        body: subscriptionRequest.toRequest());
     return response;
   }
 
@@ -174,7 +175,8 @@ class ApiServiceImpl implements ApiService {
   @override
   Future<http.Response> createUser(SubscriptionRequest subscriptionRequest) {
     var response = post(Auth().SignUp,
-        headers: getHeaders(isSecure: false), body: subscriptionRequest.toRequest());
+        headers: getHeaders(isSecure: false),
+        body: subscriptionRequest.toRequest());
     return response;
   }
 
@@ -182,6 +184,13 @@ class ApiServiceImpl implements ApiService {
   Future<http.Response> activeSubscription() {
     var response =
         get(User().ActiveSubscription, headers: getHeaders(isSecure: true));
+    return response;
+  }
+
+  @override
+  Future<http.Response> login(String email) {
+    var response =
+        get(Auth().login(email), headers: getHeaders(isSecure: false));
     return response;
   }
 }

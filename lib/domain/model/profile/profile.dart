@@ -43,6 +43,9 @@ class Profile implements DataMapper<ProfileResponse> {
     return 'ProfileResponse(firstName: $firstName, lastName: $lastName, bio: $bio, email: $email, phone: $phone, web: $web, headerImage: $headerImage, picture: $picture, pageVisitCount: $pageVisitCount, userUid: $userUid, key: $key, socials: $socials, categoryUid: $category)';
   }
 
+  bool get isIncompleteProfile =>
+      firstName.isEmpty || lastName.isEmpty || bio.isEmpty;
+
   Profile copyWith(
       {String? firstName,
       String? lastName,

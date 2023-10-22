@@ -27,20 +27,12 @@ class ViewModel extends BaseViewModel {
   String get bannerImage => _image;
   bool get hasImage => _image.isNotEmpty;
   RouterService get routerService => _routerService;
-  AppTheme get appTheme => _profile.category.theme ?? MainApp.appTheme;
+  AppTheme get appTheme =>
+      MainApp.appTheme; // _profile.category.theme ?? MainApp.appTheme;
 
   void init({String? key, Profile? profile}) async {
     final listOfAssets = await getAssetPaths();
     _image = listOfAssets[Random().nextInt(listOfAssets.length)];
-
-    final key = Uri.base.queryParameters['key'] ?? "";
-
-    getLogger('ProfileViewModel').e(profile.toString());
-    profile ??= await runBusyFuture(locator<UserRepository>().getProfile(key));
-    if (profile == null) {
-      _routerService.replaceWith(const SubscriptionViewRoute());
-    }
-    _profile = profile!;
 
     rebuildUi();
   }
@@ -83,10 +75,10 @@ class ViewModel extends BaseViewModel {
     _launch(uri);
   }
 
-  launchWhatsApp(String number) {
+  launchSocialLink(Social s, String data) {
     final Uri uri = Uri(
       scheme: 'https',
-      path: '${getLinkPrefix(Social.WhatsApp)}${number.replaceFirst('+', '')}',
+      path: '${getLinkPrefix(s)}$data',
     );
     _launch(uri);
   }
@@ -95,38 +87,6 @@ class ViewModel extends BaseViewModel {
     final Uri uri = Uri(
       scheme: 'mailto',
       path: email,
-    );
-    _launch(uri);
-  }
-
-  launchInstagram(String uid) {
-    final Uri uri = Uri(
-      scheme: 'https',
-      path: '${getLinkPrefix(Social.Instagram)}$uid',
-    );
-    _launch(uri);
-  }
-
-  launchFacebook(String uid) {
-    final Uri uri = Uri(
-      scheme: 'https',
-      path: '${getLinkPrefix(Social.Facebook)}$uid',
-    );
-    _launch(uri);
-  }
-
-  launchLinkedIn(String uid) {
-    final Uri uri = Uri(
-      scheme: 'https',
-      path: '${getLinkPrefix(Social.LinkedIn)}$uid',
-    );
-    _launch(uri);
-  }
-
-  launchTwitter(String uid) {
-    final Uri uri = Uri(
-      scheme: 'https',
-      path: '${getLinkPrefix(Social.Twitter)}$uid',
     );
     _launch(uri);
   }
@@ -141,6 +101,10 @@ class ViewModel extends BaseViewModel {
 
   void goToSubscriptionScreen() {
     _routerService.navigateTo(const SubscriptionViewRoute());
+  }
+
+  void goToLogin(){
+    _dialogService.showCustomDialog(variant: DialogType.loginAlert);
   }
 
   Future<void> _launch(Uri url) async {
@@ -172,4 +136,7 @@ class ViewModel extends BaseViewModel {
         mainButtonTitle: positiveButtonTitle,
         data: data);
   }
+
+  @override
+  get modelError => super.modelError.toString().replaceAll("Exception:", '');
 }

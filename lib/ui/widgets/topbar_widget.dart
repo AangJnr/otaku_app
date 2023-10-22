@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:otaku_katarougu_app/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../app/app.dialogs.dart';
 import '../../app/app.router.dart';
 import '../../config/theme_setup.dart';
 import '../../domain/model/profile/profile.dart';
@@ -38,15 +39,13 @@ class TopbarWidget extends StatelessWidget {
             style: headerTextStyle,
             isSelected: 'WORK' == label),
         const Spacer(),
-        buildHeaderItem('Share Profile', onTap: (){}, style: headerTextStyle),
         buildHeaderItem('Get a card',
             onTap: () => locator<RouterService>()
                 .navigateTo(const SubscriptionViewRoute()),
             style: headerTextStyle),
-        buildHeaderItem('Login',
-            onTap: () => locator<RouterService>()
-                .navigateTo(const SubscriptionViewRoute()),
-            style: headerTextStyle),
+        buildHeaderItem('Login', onTap: () async {
+          locator<DialogService>().showCustomDialog(variant: DialogType.loginAlert);
+        }, style: headerTextStyle),
       ],
     );
   }

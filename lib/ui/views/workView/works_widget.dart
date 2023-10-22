@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:otaku_katarougu_app/domain/model/profile/relevant_work.dart';
 import 'package:otaku_katarougu_app/ui/widgets/relevant_work_item.dart';
 
  import '../../common/ui_helpers.dart';
@@ -25,7 +24,7 @@ class WorkViewWidget extends StatelessWidget {
             style: Theme.of(context)
                 .primaryTextTheme
                 .titleLarge
-                ?.copyWith(color: theme.primaryTextColor),
+                ?.copyWith(color: theme.accentColor),
           ),
           verticalSpaceLarge,
           ...viewModel.profile.relevantWorks

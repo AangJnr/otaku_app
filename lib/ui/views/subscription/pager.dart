@@ -8,7 +8,7 @@ import 'package:otaku_katarougu_app/ui/common/ui_helpers.dart';
 import 'package:otaku_katarougu_app/ui/widgets/primary_button_widget.dart';
 import 'package:stacked/stacked.dart';
 
-import '../views/subscription/subscription_model.dart';
+import 'subscription_model.dart';
 
 class CategoriesPagerWidget extends ViewModelWidget<SubscriptionModel> {
   const CategoriesPagerWidget({
@@ -54,7 +54,7 @@ class CategoriesPagerWidget extends ViewModelWidget<SubscriptionModel> {
                             borderRadius: BorderRadius.circular(17),
                             color: viewModel.categories[i].theme?.accentColor,
                           ),
-                          child: FaIcon(
+                          child: const FaIcon(
                             FontAwesomeIcons.qrcode,
                             size: 40,
                             color: Colors.white,
@@ -132,39 +132,41 @@ class CategoriesPagerWidget extends ViewModelWidget<SubscriptionModel> {
                   ),
                   verticalSpaceSmall,
                   const Divider(),
-                  ...viewModel.categories[i].features
-                      .map(
-                        (e) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(children: [
-                            FaIcon(
-                              FontAwesomeIcons.check,
-                              color: viewModel.categories[i].theme?.accentColor,
-                              size: 20,
+                  Column(
+                      children: viewModel.categories[i].features
+                          .map(
+                            (e) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(children: [
+                                FaIcon(
+                                  FontAwesomeIcons.check,
+                                  color: viewModel
+                                      .categories[i].theme?.accentColor,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  e,
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .titleSmall
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.w900,
+                                        height: 1.4,
+                                        fontSize: 13,
+                                        color: viewModel.categories[i].theme
+                                            ?.primaryTextColor,
+                                      ),
+                                )
+                              ]),
                             ),
-                            const SizedBox(width: 8),
-                            Text(
-                              e,
-                              style: Theme.of(context)
-                                  .primaryTextTheme
-                                  .titleSmall
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.w900,
-                                    height: 1.4,
-                                    color: viewModel
-                                        .categories[i].theme?.primaryTextColor,
-                                  ),
-                            )
-                          ]),
-                        ),
-                      )
-                      .toList(),
+                          )
+                          .toList()),
                   verticalSpaceMedium,
                   PrimaryButtonWidget(
                     '  Choose Plan  ',
                     onTap: () {
                       viewModel.showEnterEmailToSubscribeDialog();
-
                     },
                     iconData: FontAwesomeIcons.arrowRight,
                     showText: true,

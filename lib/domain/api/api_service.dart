@@ -1,11 +1,8 @@
-import 'dart:io';
-
- import 'package:http/http.dart' show Response, StreamedResponse;
+import 'package:http/http.dart' show Response, StreamedResponse;
 
 import '../model/profile/profile.dart';
 import '../model/subscription.dart';
 import '../model/upload_photo_request.dart';
-
 
 abstract class ApiService {
   Future<Response> createUser(SubscriptionRequest subscriptionRequest);
@@ -15,4 +12,5 @@ abstract class ApiService {
   Future<Response> subscribe(SubscriptionRequest subscriptionRequest);
   Future<Response> activeSubscription();
   Future<Response> getCategories();
+  Future<Response> login(String email);
 }

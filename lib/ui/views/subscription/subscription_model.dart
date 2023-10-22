@@ -1,6 +1,8 @@
 import 'package:otaku_katarougu_app/app/app.logger.dart';
 import 'package:otaku_katarougu_app/app/app.router.dart';
 import 'package:otaku_katarougu_app/main.dart';
+import 'package:stacked_services/stacked_services.dart';
+import '../../../app/app.dialogs.dart';
 import '../../../app/app.locator.dart';
 import '../../../domain/model/category/category.dart';
 import '../../../domain/model/profile/profile.dart';
@@ -44,10 +46,11 @@ class SubscriptionModel extends ViewModel {
   }
 
   void showEnterEmailToSubscribeDialog() {
-    showCustomDialog(
-            data: categories[index],
-            description:
-                "Get access to features such as ${categories[index].features.fold('', (previousValue, element) => "$previousValue$element\n")} \nPlease enter your email to subscribe")
-        .then((response) {});
+    locator<DialogService>().showCustomDialog(
+        variant: DialogType.subscriptionAlert,
+        title: '',
+        description:
+            "Get access to features such as ${categories[index].features.fold('', (previousValue, element) => "$previousValue$element\n")} \nPlease enter your email to subscribe",
+        data: categories[index]);
   }
 }

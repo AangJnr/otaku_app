@@ -2,36 +2,36 @@ import 'package:otaku_katarougu_app/app/app.locator.dart';
 import 'package:otaku_katarougu_app/domain/repository/user_repository.dart';
 import 'package:otaku_katarougu_app/utils/validators.dart';
 
-import '../../../domain/model/category/category.dart';
-import '../../../domain/model/subscription.dart';
 import '../../views/viewmodel.dart';
 
-enum SubsState { idle, loading, subscribed, failed }
+enum SubsState { idle, loading, success, failed }
 
-class SubscriptionAlertDialogModel extends ViewModel {
+class LoginAlertDialogModel extends ViewModel {
   final _userRepository = locator<UserRepository>();
-  SubsState _subscriptionState = SubsState.idle;
-  SubsState get subscriptionState => _subscriptionState;
+  SubsState _state = SubsState.idle;
+  SubsState get state => _state;
   String _email = '';
+  String _message = '';
+  String get message => _message;
   String get email => _email;
   bool get isEmailValid => Validators.validateEmail(_email).isEmpty == true;
 
-  void subscribe(Category category) async {
+  void login() async {
     setState(SubsState.loading);
     rebuildUi();
-
-    (await runBusyFuture(_userRepository.createAccount(
-            SubscriptionRequest(email: _email, categoryUid: category.uid))))
-        .when((success) {
-      setState(SubsState.subscribed);
+    await runBusyFuture(
+        Future.delayed(const Duration(seconds: 3)).then((v) {}));
+    (await runBusyFuture(_userRepository.login(_email))).when((success) {
+      setState(SubsState.success);
+      _message = success;
     }, (error) {
-      setState(SubsState.failed);
       setError(error);
-     });
+      setState(SubsState.failed);
+    });
   }
 
   setState(newState) {
-    _subscriptionState = newState;
+    _state = newState;
     rebuildUi();
   }
 

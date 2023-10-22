@@ -6,6 +6,7 @@ import 'package:otaku_katarougu_app/ui/widgets/back_drop_filter_widget.dart';
 import 'package:otaku_katarougu_app/ui/widgets/primary_button_widget.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import '../../widgets/error_widget.dart';
 import 'subscription_alert_dialog_model.dart';
 
 import '../../../domain/model/category/category.dart';
@@ -63,12 +64,7 @@ class SubscriptionAlertDialog
               fontSize: 30),
         ),
         verticalSpaceLarge,
-        LoadingWidget(
-          pathBackgroundColor: category.theme?.primaryBackgroundColor,
-          colors: category.theme?.accentColor == null
-              ? []
-              : [category.theme!.accentColor!],
-        ),
+        LoadingWidget(),
         verticalSpaceLarge
       ],
     );
@@ -114,13 +110,12 @@ class SubscriptionAlertDialog
           softWrap: true,
         ),
         verticalSpaceSmall,
-        Column(
-          mainAxisSize: MainAxisSize.min,
+        Wrap(
           children: category.features
               .map(
                 (e) => Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(children: [
+                  child: Row(mainAxisSize: MainAxisSize.min, children: [
                     FaIcon(
                       FontAwesomeIcons.check,
                       color: category.theme?.accentColor,
@@ -239,71 +234,40 @@ class SubscriptionAlertDialog
 
   Widget _buildErrorWidget(BuildContext context,
       SubscriptionAlertDialogModel viewModel, Category category) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        verticalSpaceMedium,
-        RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: 'Oops, Our Server\'s Playing\n',
-                style: Theme.of(context).primaryTextTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w900,
-                    height: 1.4,
-                    color: Colors.black,
-                    fontSize: 30),
-              ),
-              TextSpan(
-                text: 'Hide and Seek!',
-                style: Theme.of(context).primaryTextTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w900,
-                      height: 1.4,
-                      color: Colors.red,
-                      fontSize: 30,
-                    ),
-              ),
-            ],
+    return AErrorWidget(
+      message: viewModel.modelError,
+      negativeAction: () => completer(
+        DialogResponse(
+          confirmed: false,
+        ),
+      ),
+      negativeText: 'Cancel',
+      positiveAction: viewModel.isEmailValid
+          ? () {
+              viewModel.subscribe(category);
+            }
+          : null,
+      positiveText: 'Try again',
+      buttonColor: viewModel.appTheme.accentColor,
+      child: GestureDetector(
+        onTap: () {
+          completer(DialogResponse(
+            confirmed: false,
+          ));
+          viewModel.goToLogin();
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(
+            "Login",
+            style: Theme.of(context).primaryTextTheme.displaySmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                decoration: TextDecoration.underline,
+                color: viewModel.appTheme.accentColor),
           ),
         ),
-        verticalSpaceLarge,
-        const Text(
-          "It seems our server decided to take a coffee break ☕! We're working diligently to coax it out of hiding. Thanks for your patience as we chase those digital gremlins away!",
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 14, color: kcMediumGrey),
-          maxLines: 3,
-          softWrap: true,
-        ),
-        verticalSpaceMedium,
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            PrimaryButtonWidget(
-              "Cancel",
-              onTap: () => completer(DialogResponse(
-                confirmed: false,
-              )),
-              showText: true,
-              color: Colors.red[400],
-            ),
-            horizontalSpaceMedium,
-            PrimaryButtonWidget(
-              "Try again",
-              onTap: viewModel.isEmailValid
-                  ? () {
-                      viewModel.subscribe(category);
-                    }
-                  : null,
-              showText: true,
-              color: category.theme?.accentColor,
-            ),
-          ],
-        ),
-      ],
+      ),
     );
   }
 
