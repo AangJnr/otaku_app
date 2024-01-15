@@ -42,7 +42,6 @@ class UserRepositoryImpl with BaseRepository implements UserRepository {
     var data = await processRequest(() => apiService.getCategories());
     try {
       if (data.isSuccess()) {
-        getLogger('UserRepo').i(data.tryGetSuccess()!);
         List<dynamic> dataList = data.tryGetSuccess()!;
         return Success(dataList
             .map((e) => CategoryResponse.fromMap(e).mapToDomain())
@@ -104,8 +103,9 @@ class UserRepositoryImpl with BaseRepository implements UserRepository {
   }
 
   @override
-  Future<Result<String, Exception>> login(String email) async {
-    var data = await processRequest(() => apiService.login(email));
+  Future<Result<String, Exception>> sendVerificationLink(String email) async {
+    var data =
+        await processRequest(() => apiService.sendVerificationLink(email));
     if (data.isSuccess()) {
       return Success(data.tryGetSuccess()!.toString());
     }

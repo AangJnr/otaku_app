@@ -31,7 +31,7 @@ Future<void> main() async {
 }
 
 class MainApp extends StatelessWidget {
-  static AppTheme appTheme = DefaultTheme();
+  static AppTheme appTheme = GoldTheme();
   const MainApp({super.key});
 
   @override
@@ -40,7 +40,7 @@ class MainApp extends StatelessWidget {
       builder: (_) => MaterialApp.router(
         routerDelegate: stackedRouter.delegate(),
         routeInformationParser: stackedRouter.defaultRouteParser(),
-        theme: getTheme(context),
+        theme: getTheme(context),debugShowCheckedModeBanner: false,
       ),
     ).animate().fadeIn(
           delay: const Duration(milliseconds: 50),

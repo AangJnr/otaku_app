@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:otaku_katarougu_app/ui/views/viewmodel.dart';
+import 'package:otaku_katarougu_app/ui/views/base/viewmodel.dart';
 import 'package:otaku_katarougu_app/ui/widgets/social_buttons/social_buttons_viewmodel.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';

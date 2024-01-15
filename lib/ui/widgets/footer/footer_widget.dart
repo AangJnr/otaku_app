@@ -33,7 +33,7 @@ class FooterWidget extends StackedView<FooterViewModel> {
           ),
           verticalSpaceSmall,
           GestureDetector(
-            onTap: viewModel.goToSubscriptionScreen,
+            onTap: viewModel.screenManager.goToSubscriptionScreen,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(

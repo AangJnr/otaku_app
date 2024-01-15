@@ -1,11 +1,9 @@
-import 'package:otaku_katarougu_app/ui/common/app_colors.dart';
-import 'package:otaku_katarougu_app/ui/common/ui_helpers.dart';
+ import 'package:otaku_katarougu_app/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../widgets/primary_button_widget.dart';
-import '../viewmodel.dart';
-import 'unknown_viewmodel.dart';
+ import 'unknown_viewmodel.dart';
 
 class UnknownViewMobile extends ViewModelWidget<UnknownViewModel> {
   final String? message;
@@ -49,7 +47,7 @@ class UnknownViewMobile extends ViewModelWidget<UnknownViewModel> {
               PrimaryButtonWidget(
                 "Refresh", color: viewModel.appTheme.accentColor,
                 onTap: () {
-                  viewModel.routerService.replaceWith(pageRoute!);
+                  viewModel.screenManager.goTo(pageRoute!);
                 },
                 showText: true,
               )

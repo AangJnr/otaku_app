@@ -10,12 +10,12 @@ import 'package:stacked/stacked.dart' as _i9;
 import 'package:stacked_services/stacked_services.dart' as _i8;
 
 import '../domain/model/profile/profile.dart' as _i11;
-import '../ui/views/profile/profile_view.dart' as _i2;
-//import '../ui/views/profileEdit/profile_edit_view.dart' as _i3;
+import '../ui/views/publicProfile/public_profile_view.dart' as _i2;
 import '../ui/views/startup/startup_view.dart' as _i1;
 import '../ui/views/subscription/subscription.dart' as _i5;
 import '../ui/views/termsAndPolicy/terms_and_policy.dart' as _i6;
 import '../ui/views/unknown/unknown_view.dart' as _i7;
+import '../ui/views/user/profile/profile_view.dart' as _i3;
 import '../ui/views/workView/work_view.dart' as _i4;
 
 final stackedRouter =
@@ -35,12 +35,25 @@ class StackedRouterWeb extends _i9.RootStackRouter {
         barrierDismissible: false,
       );
     },
-    ProfileViewRoute.name: (routeData) {
-      final args = routeData.argsAs<ProfileViewArgs>(
-          orElse: () => const ProfileViewArgs());
+    PublicProfileViewRoute.name: (routeData) {
+      final args = routeData.argsAs<PublicProfileViewArgs>(
+          orElse: () => const PublicProfileViewArgs());
       return _i9.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i2.ProfileView(
+        child: _i2.PublicProfileView(
+          profile: args.profile,
+          key: args.key,
+        ),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    MyProfileViewRoute.name: (routeData) {
+      final args = routeData.argsAs<MyProfileViewArgs>(
+          orElse: () => const MyProfileViewArgs());
+      return _i9.CustomPage<dynamic>(
+        routeData: routeData,
+        child: _i3.MyProfileView(
           profile: args.profile,
           key: args.key,
         ),
@@ -69,7 +82,7 @@ class StackedRouterWeb extends _i9.RootStackRouter {
         barrierDismissible: false,
       );
     },
-    TermsAndPolicyViewRoute.name: (routeData) {
+    PolicyViewRoute.name: (routeData) {
       return _i9.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i6.TermsAndPolicyView(),
@@ -77,7 +90,7 @@ class StackedRouterWeb extends _i9.RootStackRouter {
         barrierDismissible: false,
       );
     },
-    TermsRoute.name: (routeData) {
+    TermsViewRoute.name: (routeData) {
       return _i9.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i6.TermsAndPolicyView(),
@@ -109,12 +122,12 @@ class StackedRouterWeb extends _i9.RootStackRouter {
           path: '/',
         ),
         _i9.RouteConfig(
-          ProfileViewRoute.name,
-          path: '/profile-view',
+          PublicProfileViewRoute.name,
+          path: '/public-profile',
         ),
         _i9.RouteConfig(
-          ProfileEditViewRoute.name,
-          path: '/my-profile',
+          MyProfileViewRoute.name,
+          path: '/me',
         ),
         _i9.RouteConfig(
           WorkViewRoute.name,
@@ -122,15 +135,15 @@ class StackedRouterWeb extends _i9.RootStackRouter {
         ),
         _i9.RouteConfig(
           SubscriptionViewRoute.name,
-          path: '/subscription-view',
+          path: '/subscribe',
         ),
         _i9.RouteConfig(
-          TermsAndPolicyViewRoute.name,
-          path: 'policy',
+          PolicyViewRoute.name,
+          path: '/policy',
         ),
         _i9.RouteConfig(
-          TermsRoute.name,
-          path: 'terms',
+          TermsViewRoute.name,
+          path: '/terms',
         ),
         _i9.RouteConfig(
           UnknownViewRoute.name,
@@ -158,25 +171,25 @@ class StartupViewRoute extends _i9.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.ProfileView]
-class ProfileViewRoute extends _i9.PageRouteInfo<ProfileViewArgs> {
-  ProfileViewRoute({
+/// [_i2.PublicProfileView]
+class PublicProfileViewRoute extends _i9.PageRouteInfo<PublicProfileViewArgs> {
+  PublicProfileViewRoute({
     _i11.Profile? profile,
     _i10.Key? key,
   }) : super(
-          ProfileViewRoute.name,
-          path: '/profile-view',
-          args: ProfileViewArgs(
+          PublicProfileViewRoute.name,
+          path: '/public-profile',
+          args: PublicProfileViewArgs(
             profile: profile,
             key: key,
           ),
         );
 
-  static const String name = 'ProfileView';
+  static const String name = 'PublicProfileView';
 }
 
-class ProfileViewArgs {
-  const ProfileViewArgs({
+class PublicProfileViewArgs {
+  const PublicProfileViewArgs({
     this.profile,
     this.key,
   });
@@ -187,30 +200,30 @@ class ProfileViewArgs {
 
   @override
   String toString() {
-    return 'ProfileViewArgs{profile: $profile, key: $key}';
+    return 'PublicProfileViewArgs{profile: $profile, key: $key}';
   }
 }
 
 /// generated route for
-/// [_i3.ProfileEditView]
-class ProfileEditViewRoute extends _i9.PageRouteInfo<ProfileEditViewArgs> {
-  ProfileEditViewRoute({
+/// [_i3.MyProfileView]
+class MyProfileViewRoute extends _i9.PageRouteInfo<MyProfileViewArgs> {
+  MyProfileViewRoute({
     _i11.Profile? profile,
     _i10.Key? key,
   }) : super(
-          ProfileEditViewRoute.name,
-          path: '/my-profile',
-          args: ProfileEditViewArgs(
+          MyProfileViewRoute.name,
+          path: '/me',
+          args: MyProfileViewArgs(
             profile: profile,
             key: key,
           ),
         );
 
-  static const String name = 'ProfileEditView';
+  static const String name = 'MyProfileView';
 }
 
-class ProfileEditViewArgs {
-  const ProfileEditViewArgs({
+class MyProfileViewArgs {
+  const MyProfileViewArgs({
     this.profile,
     this.key,
   });
@@ -221,7 +234,7 @@ class ProfileEditViewArgs {
 
   @override
   String toString() {
-    return 'ProfileEditViewArgs{profile: $profile, key: $key}';
+    return 'MyProfileViewArgs{profile: $profile, key: $key}';
   }
 }
 
@@ -265,7 +278,7 @@ class SubscriptionViewRoute extends _i9.PageRouteInfo<void> {
   const SubscriptionViewRoute()
       : super(
           SubscriptionViewRoute.name,
-          path: '/subscription-view',
+          path: '/subscribe',
         );
 
   static const String name = 'SubscriptionView';
@@ -273,26 +286,26 @@ class SubscriptionViewRoute extends _i9.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.TermsAndPolicyView]
-class TermsAndPolicyViewRoute extends _i9.PageRouteInfo<void> {
-  const TermsAndPolicyViewRoute()
+class PolicyViewRoute extends _i9.PageRouteInfo<void> {
+  const PolicyViewRoute()
       : super(
-          TermsAndPolicyViewRoute.name,
-          path: 'policy',
+          PolicyViewRoute.name,
+          path: '/policy',
         );
 
-  static const String name = 'TermsAndPolicyView';
+  static const String name = 'PolicyView';
 }
 
 /// generated route for
 /// [_i6.TermsAndPolicyView]
-class TermsRoute extends _i9.PageRouteInfo<void> {
-  const TermsRoute()
+class TermsViewRoute extends _i9.PageRouteInfo<void> {
+  const TermsViewRoute()
       : super(
-          TermsRoute.name,
-          path: 'terms',
+          TermsViewRoute.name,
+          path: '/terms',
         );
 
-  static const String name = 'Terms';
+  static const String name = 'TermsView';
 }
 
 /// generated route for
@@ -348,13 +361,13 @@ extension RouterStateExtension on _i8.RouterService {
     );
   }
 
-  Future<dynamic> navigateToProfileView({
+  Future<dynamic> navigateToPublicProfileView({
     _i11.Profile? profile,
     _i10.Key? key,
     void Function(_i9.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
-      ProfileViewRoute(
+      PublicProfileViewRoute(
         profile: profile,
         key: key,
       ),
@@ -362,13 +375,13 @@ extension RouterStateExtension on _i8.RouterService {
     );
   }
 
-  Future<dynamic> navigateToProfileEditView({
+  Future<dynamic> navigateToMyProfileView({
     _i11.Profile? profile,
     _i10.Key? key,
     void Function(_i9.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
-      ProfileEditViewRoute(
+      MyProfileViewRoute(
         profile: profile,
         key: key,
       ),
@@ -398,18 +411,18 @@ extension RouterStateExtension on _i8.RouterService {
     );
   }
 
-  Future<dynamic> navigateToTermsAndPolicyView(
+  Future<dynamic> navigateToPolicyView(
       {void Function(_i9.NavigationFailure)? onFailure}) async {
     return navigateTo(
-      const TermsAndPolicyViewRoute(),
+      const PolicyViewRoute(),
       onFailure: onFailure,
     );
   }
 
-  Future<dynamic> navigateToTerms(
+  Future<dynamic> navigateToTermsView(
       {void Function(_i9.NavigationFailure)? onFailure}) async {
     return navigateTo(
-      const TermsAndPolicyViewRoute(),
+      const TermsViewRoute(),
       onFailure: onFailure,
     );
   }
@@ -440,13 +453,13 @@ extension RouterStateExtension on _i8.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithProfileView({
+  Future<dynamic> replaceWithPublicProfileView({
     _i11.Profile? profile,
     _i10.Key? key,
     void Function(_i9.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
-      ProfileViewRoute(
+      PublicProfileViewRoute(
         profile: profile,
         key: key,
       ),
@@ -454,13 +467,13 @@ extension RouterStateExtension on _i8.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithProfileEditView({
+  Future<dynamic> replaceWithMyProfileView({
     _i11.Profile? profile,
     _i10.Key? key,
     void Function(_i9.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
-      ProfileEditViewRoute(
+      MyProfileViewRoute(
         profile: profile,
         key: key,
       ),
@@ -490,18 +503,18 @@ extension RouterStateExtension on _i8.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithTermsAndPolicyView(
+  Future<dynamic> replaceWithPolicyView(
       {void Function(_i9.NavigationFailure)? onFailure}) async {
     return replaceWith(
-      const TermsAndPolicyViewRoute(),
+      const PolicyViewRoute(),
       onFailure: onFailure,
     );
   }
 
-  Future<dynamic> replaceWithTerms(
+  Future<dynamic> replaceWithTermsView(
       {void Function(_i9.NavigationFailure)? onFailure}) async {
     return replaceWith(
-      const TermsAndPolicyViewRoute(),
+      const TermsViewRoute(),
       onFailure: onFailure,
     );
   }

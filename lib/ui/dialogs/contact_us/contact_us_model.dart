@@ -2,7 +2,7 @@
 import 'package:otaku_katarougu_app/utils/validators.dart';
 
 import '../../../domain/model/category/category.dart';
-import '../../views/viewmodel.dart';
+import '../../views/base/viewmodel.dart';
 
 class ContactUsDialogModel extends ViewModel {
 String _email = '';

@@ -108,5 +108,5 @@ class CategoryResponse implements DomainMapper<Category> {
       currency: currency ?? '',
       cardType: cardType?.mapToDomain() ?? const CardType(),
       durationInDays: durationInDays ?? 0,
-      theme: theme == null ? DefaultTheme() : GenericTheme.fromTheme(theme!));
+      theme: theme == null ? GoldTheme() : GenericTheme.fromTheme(theme!));
 }

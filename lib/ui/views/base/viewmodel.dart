@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart' show ValueNotifier;
 import 'package:flutter/services.dart';
 import 'package:otaku_katarougu_app/app/app.dialogs.dart';
 import 'package:otaku_katarougu_app/app/app.locator.dart';
@@ -11,29 +12,39 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../config/theme_setup.dart';
-import '../../domain/model/profile/profile.dart';
-import '../../domain/repository/user_repository.dart';
-import '../../main.dart';
+import '../../../../config/theme_setup.dart';
+import '../../../app/services/screen_manager.dart';
+import '../../../domain/model/profile/profile.dart';
+import '../../../main.dart';
+import 'view_state.dart';
 
 enum Social { WhatsApp, Instagram, LinkedIn, Twitter, Facebook, Email, Phone }
 
-class ViewModel extends BaseViewModel {
-  final _routerService = locator<RouterService>();
+class ViewModel<T extends BaseViewState> extends BaseViewModel {
+  InitialState _viewState = InitialState();
+  ValueNotifier<BaseViewState> get viewStateNotifier =>
+      ValueNotifier(viewState);
+  final _screenManager = locator<ScreenManagerService>();
   final _dialogService = locator<DialogService>();
   Profile _profile = const Profile();
   Profile get profile => _profile;
   String _image = '';
-  String get bannerImage => _image;
-  bool get hasImage => _image.isNotEmpty;
-  RouterService get routerService => _routerService;
-  AppTheme get appTheme =>
-      MainApp.appTheme; // _profile.category.theme ?? MainApp.appTheme;
+  ScreenManagerService get screenManager => _screenManager;
+  AppTheme get appTheme => MainApp.appTheme;
+  InitialState get viewState => _viewState;
+
+  String get bannerImageUrl => _image;
+  bool get bannerImageLoaded => _image.isNotEmpty;
 
   void init({String? key, Profile? profile}) async {
     final listOfAssets = await getAssetPaths();
     _image = listOfAssets[Random().nextInt(listOfAssets.length)];
+        rebuildUi();
 
+  }
+
+  set viewState(InitialState newValue) {
+    _viewState = newValue;
     rebuildUi();
   }
 
@@ -99,11 +110,7 @@ class ViewModel extends BaseViewModel {
     _launch(uri);
   }
 
-  void goToSubscriptionScreen() {
-    _routerService.navigateTo(const SubscriptionViewRoute());
-  }
-
-  void goToLogin(){
+  void goToLogin() {
     _dialogService.showCustomDialog(variant: DialogType.loginAlert);
   }
 

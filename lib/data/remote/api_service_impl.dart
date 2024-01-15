@@ -188,7 +188,7 @@ class ApiServiceImpl implements ApiService {
   }
 
   @override
-  Future<http.Response> login(String email) {
+  Future<http.Response> sendVerificationLink(String email) {
     var response =
         get(Auth().login(email), headers: getHeaders(isSecure: false));
     return response;

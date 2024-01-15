@@ -16,6 +16,5 @@ abstract class UserRepository {
       SubscriptionRequest subscriptionRequest);
   Future<Result<Subscription, Exception>> createAccount(
       SubscriptionRequest subscriptionRequest);
-   Future<Result<String, Exception>> login(
-      String email);
+  Future<Result<String, Exception>> sendVerificationLink(String email);
 }

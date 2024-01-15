@@ -1,5 +1,5 @@
 import 'package:stacked/stacked.dart';
 
-import '../viewmodel.dart';
+import '../base/viewmodel.dart';
 
 class UnknownViewModel extends  ViewModel {}

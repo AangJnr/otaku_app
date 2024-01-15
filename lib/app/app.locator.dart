@@ -18,6 +18,7 @@ import '../domain/api/api_service.dart';
 import '../domain/model/session_manager.dart';
 import '../domain/repository/user_repository.dart';
 import 'services/location_service.dart';
+import 'services/screen_manager.dart';
 import 'services/toast_service.dart';
 import 'app.router.dart';
 
@@ -41,6 +42,8 @@ Future<void> setupLocator({
   locator.registerLazySingleton<UserRepository>(() => UserRepositoryImpl());
   locator.registerLazySingleton<SessionManager>(() => SessionManagerImpl());
   locator.registerLazySingleton<ApiService>(() => ApiServiceImpl());
+  locator.registerLazySingleton<ScreenManagerService>(
+      () => ScreenManagerServiceImpl());
   if (stackedRouter == null) {
     throw Exception(
         'Stacked is building to use the Router (Navigator 2.0) navigation but no stackedRouter is supplied. Pass the stackedRouter to the setupLocator function in main.dart');

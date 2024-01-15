@@ -1,40 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:otaku_katarougu_app/ui/views/base/view_state.dart';
 import 'package:otaku_katarougu_app/ui/widgets/info_window.dart';
 
-import '../../../config/theme_setup.dart';
-import '../../common/app_constants.dart';
-import '../../common/ui_helpers.dart';
-import '../../widgets/footer/footer_widget.dart';
-import '../../widgets/social_buttons/social_buttons_widget.dart';
+import '../../../../config/theme_setup.dart';
+import '../../../common/app_constants.dart';
+import '../../../common/ui_helpers.dart';
+import '../../../widgets/footer/footer_widget.dart';
+import '../../../widgets/social_buttons/social_buttons_widget.dart';
 import 'profile_viewmodel.dart';
 
-class ProfileWidget extends StatelessWidget {
-  final ProfileViewModel viewModel;
-  const ProfileWidget(this.viewModel, {super.key});
+class MyProfileWidget extends StatelessWidget {
+  final MyProfileViewModel viewModel;
+  const MyProfileWidget(this.viewModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = viewModel.appTheme;
-    final borderRadius = BorderRadius.circular(radiusValue);
 
     return SingleChildScrollView(
       child: Column(
         children: [
           verticalSpaceMedium,
-          if (viewModel.profile.isIncompleteProfile)
-            InfoWindow(
-              positiveAction: () {
-                viewModel.goToLogin();
-              },
-              positiveText: 'Login to complete profile',
-              buttonColor: viewModel.appTheme.accentColor,
-              title1:'Incomplete',
-              title2: 'Profile!',
+          ValueListenableBuilder<BaseViewState>(
+              valueListenable: viewModel.viewStateNotifier,
+              builder: (context, value, child) =>
+                  _buidWidgetForStateChange(value, context, theme)),
+          verticalSpaceLarge,
+          const FooterWidget(),
+          verticalSpaceLarge,
+        ],
+      ),
+    );
+  }
 
-              message:
-                  'Complete your profile now to unlock a better user experience and personalized content. It\'s quick and easy – just a few clicks away!',
-            )
-          else ...[
+  Widget _buidWidgetForStateChange(
+      BaseViewState state, BuildContext context, AppTheme theme) {
+    switch (state) {
+      case ProfileLoadedViewState():
+        if (state.profile.isIncompleteProfile) {
+          return InfoWindow(
+            positiveAction: () {
+              viewModel.goToLogin();
+            },
+            positiveText: 'Login to complete profile',
+            buttonColor: viewModel.appTheme.accentColor,
+            title1: 'Incomplete',
+            title2: ' Profile!',
+            message:
+                'Complete your profile now to unlock a better user experience and personalized content. It\'s quick and easy – just a few clicks away!',
+          );
+        }
+        return Expanded(
+          child: Column(children: [
             buildTitleAndRoleWidget(context, theme),
             verticalSpaceLarge,
             SizedBox(
@@ -52,14 +69,14 @@ class ProfileWidget extends StatelessWidget {
                           width: 400,
                           decoration: BoxDecoration(
                             color: theme.accentColor?.withOpacity(0.4),
-                            borderRadius: borderRadius,
+                            borderRadius: AppConstants().borderRadius,
                           )),
                     ),
                   ),
                   Align(
                     alignment: Alignment.center,
                     child: ClipRRect(
-                      borderRadius: borderRadius,
+                      borderRadius: AppConstants().borderRadius,
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       child: viewModel.profile.picture.isEmpty
                           ? Image.asset(
@@ -83,13 +100,11 @@ class ProfileWidget extends StatelessWidget {
             ),
             verticalSpaceLarge,
             SocialButtons(viewModel.profile),
-          ],
-          verticalSpaceLarge,
-          const FooterWidget(),
-          verticalSpaceLarge,
-        ],
-      ),
-    );
+          ]),
+        );
+      default:
+        return const SizedBox.shrink();
+    }
   }
 
   Column buildTitleAndRoleWidget(BuildContext context, AppTheme theme) {

@@ -1,18 +1,19 @@
 import 'package:otaku_katarougu_app/ui/common/app_constants.dart';
 import 'package:otaku_katarougu_app/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:otaku_katarougu_app/ui/views/profile/profile_widget.dart';
+import 'package:otaku_katarougu_app/ui/views/publicProfile/public_profile_widget.dart';
 import 'package:otaku_katarougu_app/ui/widgets/loading.dart';
 import 'package:stacked/stacked.dart';
+import '../../widgets/banner/banner_widget.dart';
 import '../../widgets/material_inkwell.dart';
 import '../../widgets/topbar_widget.dart';
-import 'profile_viewmodel.dart';
+import 'public_profile_viewmodel.dart';
 
-class ProfileViewDesktop extends ViewModelWidget<ProfileViewModel> {
-  const ProfileViewDesktop({super.key});
+class PublicProfileViewDesktop extends ViewModelWidget<PublicProfileViewModel> {
+  const PublicProfileViewDesktop({super.key});
 
   @override
-  Widget build(BuildContext context, ProfileViewModel viewModel) {
+  Widget build(BuildContext context, PublicProfileViewModel viewModel) {
     final theme = viewModel.appTheme;
 
     return Scaffold(
@@ -24,23 +25,9 @@ class ProfileViewDesktop extends ViewModelWidget<ProfileViewModel> {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Expanded(
+              const Expanded(
                 flex: 2,
-                child: Material(
-                  shadowColor: Colors.black26,
-                  elevation: 0,
-                  color: Colors.transparent,
-                  child: SizedBox(
-                    height: double.infinity,
-                    width: double.infinity,
-                    child: viewModel.hasImage
-                        ? Image.asset(
-                            viewModel.bannerImage,
-                            fit: BoxFit.contain,
-                          )
-                        : const SizedBox.shrink(),
-                  ),
-                ),
+                child: BannerWidget(),
               ),
               horizontalSpaceLarge,
               Expanded(
@@ -65,12 +52,14 @@ class ProfileViewDesktop extends ViewModelWidget<ProfileViewModel> {
                           children: [
                             TopbarWidget(
                               profile: viewModel.profile,
-                              label: 'PROFILE', appTheme: viewModel.appTheme,
-                            ), verticalSpaceMedium,
+                              label: 'PROFILE',
+                              appTheme: viewModel.appTheme,
+                            ),
+                            verticalSpaceMedium,
                             if (viewModel.isBusy)
                               const LoadingWidget()
                             else
-                              Expanded(child: ProfileWidget(viewModel)),
+                              Expanded(child: PublicProfileWidget(viewModel)),
                           ],
                         ),
                       ),

@@ -12,5 +12,5 @@ abstract class ApiService {
   Future<Response> subscribe(SubscriptionRequest subscriptionRequest);
   Future<Response> activeSubscription();
   Future<Response> getCategories();
-  Future<Response> login(String email);
+  Future<Response> sendVerificationLink(String email);
 }

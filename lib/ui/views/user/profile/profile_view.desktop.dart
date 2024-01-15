@@ -1,18 +1,19 @@
 import 'package:otaku_katarougu_app/ui/common/app_constants.dart';
 import 'package:otaku_katarougu_app/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:otaku_katarougu_app/ui/widgets/loading.dart';
 import 'package:stacked/stacked.dart';
-import '../../widgets/banner/banner_widget.dart';
-import '../../widgets/material_inkwell.dart';
-import '../../widgets/topbar_widget.dart';
-import 'work_viewmodel.dart';
-import 'works_widget.dart';
+import '../../../widgets/banner/banner_widget.dart';
+import '../../../widgets/material_inkwell.dart';
+import '../../../widgets/topbar_widget.dart';
+import 'profile_viewmodel.dart';
+import 'profile_widget.dart';
 
-class WorkViewDesktop extends ViewModelWidget<WorkViewModel> {
-  const WorkViewDesktop({super.key});
+class MyProfileViewDesktop extends ViewModelWidget<MyProfileViewModel> {
+  const MyProfileViewDesktop({super.key});
 
   @override
-  Widget build(BuildContext context, WorkViewModel viewModel) {
+  Widget build(BuildContext context, MyProfileViewModel viewModel) {
     final theme = viewModel.appTheme;
 
     return Scaffold(
@@ -24,7 +25,7 @@ class WorkViewDesktop extends ViewModelWidget<WorkViewModel> {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-           const   Expanded(
+              const Expanded(
                 flex: 2,
                 child: BannerWidget(),
               ),
@@ -51,11 +52,14 @@ class WorkViewDesktop extends ViewModelWidget<WorkViewModel> {
                           children: [
                             TopbarWidget(
                               profile: viewModel.profile,
-                              label: 'WORK',
+                              label: 'PROFILE',
                               appTheme: viewModel.appTheme,
                             ),
                             verticalSpaceMedium,
-                            Expanded(child: WorkViewWidget(viewModel)),
+                            if (viewModel.isBusy)
+                              const LoadingWidget()
+                            else
+                              Expanded(child: MyProfileWidget(viewModel)),
                           ],
                         ),
                       ),
