@@ -7,15 +7,24 @@ abstract class ApiRoutes {
 }
 
 class User extends ApiRoutes {
+  String PublicProfile(String uid) => "$url/user/public-profile/$uid";
+  String MyActiveProfile(String uid) => "$url/user/profile/me";
+  get MyProfiles => "$url/user/profiles";
+
   String Profile(String uid) => "$url/user/profile/$uid";
+
   get UploadPhoto => "$url/user/photo/upload";
   get ActiveSubscription => "$url/user/subscription/active";
   get Subscribe => "$url/user/subscribe";
 }
 
 class Auth extends ApiRoutes {
-  get SignUp => "$url/user/create";
-  String login(String email) => "$url/send-verification-link/$email";
+  get SignUp => "$url/auth/user/create";
+  String sendEmailVerificationLink(String email) =>
+      "$url/auth/send-verification-link/$email";
+  get SignInWithGoogle => "$url/auth/social-login/google";
+  get VerifyEmailUser => "$url/auth/verify";
+  get LogOut => "$url/auth/logout";
 }
 
 class Admin extends ApiRoutes {

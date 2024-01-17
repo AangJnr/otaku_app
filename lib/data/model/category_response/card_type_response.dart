@@ -4,9 +4,6 @@ import 'package:otaku_katarougu_app/domain/domain_mapper.dart';
 
 import '../../../domain/model/category/card_type.dart';
 
-
-
-
 class CardTypeResponse implements DomainMapper<CardType>{
 	final String? colorName;
 	final bool? nfcEnabled;

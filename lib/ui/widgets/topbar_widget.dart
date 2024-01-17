@@ -4,11 +4,11 @@ import 'package:otaku_katarougu_app/app/services/screen_manager.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../app/app.dialogs.dart';
- import '../../config/theme_setup.dart';
+import '../../config/theme_setup.dart';
 import '../../domain/model/profile/profile.dart';
 import 'material_inkwell.dart';
 
-enum  HeaderItem{profile, work}
+enum HeaderItem { profile, work }
 
 class TopbarWidget extends StatelessWidget {
   final Profile? profile;
@@ -31,8 +31,7 @@ class TopbarWidget extends StatelessWidget {
       children: [
         if (profile != null)
           buildHeaderItem('PROFILE',
-              onTap: () =>
-               locator<ScreenManagerService>()
+              onTap: () => locator<ScreenManagerService>()
                   .goToPublicProfileScreen(profile),
               style: headerTextStyle,
               isSelected: 'PROFILE' == label),
@@ -43,10 +42,12 @@ class TopbarWidget extends StatelessWidget {
             isSelected: 'WORK' == label),
         const Spacer(),
         buildHeaderItem('Get a card',
-            onTap: () => locator<ScreenManagerService>().goToSubscriptionScreen(),
+            onTap: () =>
+                locator<ScreenManagerService>().goToSubscriptionScreen(),
             style: headerTextStyle),
         buildHeaderItem('Login', onTap: () async {
-          locator<DialogService>().showCustomDialog(variant: DialogType.loginAlert);
+          locator<DialogService>()
+              .showCustomDialog(variant: DialogType.loginAlert);
         }, style: headerTextStyle),
       ],
     );

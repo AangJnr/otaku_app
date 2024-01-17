@@ -125,20 +125,17 @@ class ApiServiceImpl implements ApiService {
     return request.send();
   }
 
-  // @override
-  // Future<http.Response> getUser(String uid) {
-  //   var response = get(
-  //     User().Profile(uid),
-  //     headers: getHeaders(isSecure: false),
-  //   );
-  //   return response;
-  // }
+  @override
+  Future<http.Response> getPublicProfile(String uid) {
+    var response =
+        get(User().PublicProfile(uid), headers: getHeaders(isSecure: false));
+    return response;
+  }
 
   @override
-  Future<http.Response> getProfile(String uid) {
-    var response =
-        get(User().Profile(uid), headers: getHeaders(isSecure: false));
-    return response;
+  Future<http.Response> getMyProfiles() {
+    var response = get(User().MyProfiles, headers: getHeaders(isSecure: false));
+        return response;
   }
 
   @override
@@ -189,8 +186,28 @@ class ApiServiceImpl implements ApiService {
 
   @override
   Future<http.Response> sendVerificationLink(String email) {
-    var response =
-        get(Auth().login(email), headers: getHeaders(isSecure: false));
+    var response = get(Auth().sendEmailVerificationLink(email),
+        headers: getHeaders(isSecure: false));
+    return response;
+  }
+
+  @override
+  Future<http.Response> logout() {
+    var response = get(Auth().LogOut, headers: getHeaders(isSecure: true));
+    return response;
+  }
+
+  @override
+  Future<http.Response> verifyEmail(String token) {
+    var response = get(Auth().VerifyEmailUser(token),
+        headers: getHeaders(isSecure: false));
+    return response;
+  }
+
+  @override
+  Future<http.Response> signInWithGoogle(String idToken) {
+    var response = get(Auth().SignInWithGoogle(idToken),
+        headers: getHeaders(isSecure: false));
     return response;
   }
 }

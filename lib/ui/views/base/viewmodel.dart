@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:otaku_katarougu_app/app/app.dialogs.dart';
 import 'package:otaku_katarougu_app/app/app.locator.dart';
 import 'package:otaku_katarougu_app/app/app.logger.dart';
-import 'package:otaku_katarougu_app/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,6 +25,7 @@ class ViewModel<T extends BaseViewState> extends BaseViewModel {
       ValueNotifier(viewState);
   final _screenManager = locator<ScreenManagerService>();
   final _dialogService = locator<DialogService>();
+  DialogService get dialogService => _dialogService;
   Profile _profile = const Profile();
   Profile get profile => _profile;
   String _image = '';
@@ -39,8 +39,7 @@ class ViewModel<T extends BaseViewState> extends BaseViewModel {
   void init({String? key, Profile? profile}) async {
     final listOfAssets = await getAssetPaths();
     _image = listOfAssets[Random().nextInt(listOfAssets.length)];
-        rebuildUi();
-
+    rebuildUi();
   }
 
   set viewState(InitialState newValue) {
@@ -136,11 +135,29 @@ class ViewModel<T extends BaseViewState> extends BaseViewModel {
     String? negativeButtonTitle,
   }) {
     return _dialogService.showCustomDialog(
-        variant: DialogType.subscriptionAlert,
+        variant: DialogType.alert,
         title: title,
         description: description,
         secondaryButtonTitle: negativeButtonTitle,
         mainButtonTitle: positiveButtonTitle,
+        data: data);
+  }
+
+  Future<DialogResponse?> showLoadingDialog(
+      {String? title, String? description, dynamic data}) {
+    return dialogService.showCustomDialog(
+        variant: DialogType.loadingAlert,
+        title: title,
+        description: description,
+        data: data);
+  }
+
+
+   Future<DialogResponse?> showErrorDialog({String? title, String? description, dynamic data}) {
+    return dialogService.showCustomDialog(
+        variant: DialogType.alert,
+        title: title,
+        description: description,
         data: data);
   }
 

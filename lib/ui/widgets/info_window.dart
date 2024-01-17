@@ -48,7 +48,7 @@ class InfoWindow extends StatelessWidget {
                     fontSize: 30),
               ),
               TextSpan(
-                text: title2,
+                text: " $title2",
                 style: Theme.of(context).primaryTextTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w900,
                       height: 1.4,

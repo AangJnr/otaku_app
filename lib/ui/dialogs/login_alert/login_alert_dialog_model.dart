@@ -1,5 +1,6 @@
 import 'package:otaku_katarougu_app/app/app.locator.dart';
-import 'package:otaku_katarougu_app/domain/repository/user_repository.dart';
+import 'package:otaku_katarougu_app/app/services/social_auth_service.dart';
+import 'package:otaku_katarougu_app/domain/repository/auth_repository.dart';
 import 'package:otaku_katarougu_app/ui/views/base/view_state.dart';
 import 'package:otaku_katarougu_app/utils/validators.dart';
 
@@ -8,7 +9,7 @@ import '../../views/base/viewmodel.dart';
 enum SubsState { idle, loading, success, failed }
 
 class LoginAlertDialogModel extends ViewModel<BaseViewState> {
-  final _userRepository = locator<UserRepository>();
+  final _authRepository = locator<AuthRepository>();
   String _email = '';
   String get email => _email;
   bool get isEmailValid => Validators.validateEmail(_email).isEmpty == true;
@@ -16,7 +17,7 @@ class LoginAlertDialogModel extends ViewModel<BaseViewState> {
   void login() async {
     viewState = LoadingViewState();
 
-    (await runBusyFuture(_userRepository.sendVerificationLink(_email))).when(
+    (await runBusyFuture(_authRepository.sendVerificationLink(_email))).when(
         (success) {
       viewState = VerificationLinkSentViewState(success);
     }, (error) {
@@ -31,6 +32,28 @@ class LoginAlertDialogModel extends ViewModel<BaseViewState> {
   }
 
   void goToProfile() {}
+
+  void performGoogleSignIn() async {
+    viewState = LoadingViewState();
+
+    final idToken = await locator<SocialAuthService>().getGoogleAuthToken();
+    if (idToken == null) {
+      showErrorDialog(
+          title: "Sign in failed",
+          description:
+              "Whoopsie! 🤭 Try again—mistakes are just a detour on the road to awesomeness! 🛣️💫\n#PersistenceWins");
+      return;
+    }
+
+    (await runBusyFuture(_authRepository.signInWithGoogle(idToken))).when(
+        (success) {
+      viewState = IdleViewState();
+      screenManager.goToMyProfileScreen();
+    }, (error) {
+      setError(error);
+      showErrorDialog(title: "Sign in failed", description: modelError);
+    });
+  }
 }
 
 class LoadingViewState extends InitialState {}

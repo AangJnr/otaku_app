@@ -28,7 +28,7 @@ class TermsAndPolicyDesktop extends ViewModelWidget<TermsAndPolicyModel> {
               horizontalSpaceMedium,
               const Expanded(
                 flex: 2,
-                child: BannerWidget(),
+                child: SideBannerImageWidget(),
               ),
               horizontalSpaceMedium,
               Expanded(

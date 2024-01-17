@@ -5,8 +5,8 @@ import '../../../domain/model/profile/profile.dart';
 import '../../views/base/view_state.dart';
 import '../../views/base/viewmodel.dart';
 
-class BannerWidget extends StackedView<BannerViewModel> {
-  const BannerWidget({Key? key}) : super(key: key);
+class SideBannerImageWidget extends StackedView<BannerViewModel> {
+  const SideBannerImageWidget({Key? key}) : super(key: key);
 
   @override
   Widget builder(

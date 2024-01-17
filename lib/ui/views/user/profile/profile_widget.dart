@@ -36,20 +36,19 @@ class MyProfileWidget extends StatelessWidget {
   Widget _buidWidgetForStateChange(
       BaseViewState state, BuildContext context, AppTheme theme) {
     switch (state) {
-      case ProfileLoadedViewState():
-        if (state.profile.isIncompleteProfile) {
-          return InfoWindow(
-            positiveAction: () {
-              viewModel.goToLogin();
-            },
-            positiveText: 'Login to complete profile',
-            buttonColor: viewModel.appTheme.accentColor,
-            title1: 'Incomplete',
-            title2: ' Profile!',
-            message:
-                'Complete your profile now to unlock a better user experience and personalized content. It\'s quick and easy – just a few clicks away!',
-          );
-        }
+      case NoProfilesViewState():
+        return InfoWindow(
+          positiveAction: () {
+            viewModel.setEditProfileState();
+          },
+          positiveText: 'Add a Profile',
+          buttonColor: viewModel.appTheme.accentColor,
+          title1: 'No Profiles',
+          title2: 'Available!',
+          message:
+              'Kindly add a profile now to unlock a better user experience and personalized content. It\'s quick and easy – just a few clicks away!',
+        );
+      case MyProfilesLoadedViewState():
         return Expanded(
           child: Column(children: [
             buildTitleAndRoleWidget(context, theme),

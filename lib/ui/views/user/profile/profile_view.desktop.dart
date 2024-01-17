@@ -27,7 +27,7 @@ class MyProfileViewDesktop extends ViewModelWidget<MyProfileViewModel> {
             children: [
               const Expanded(
                 flex: 2,
-                child: BannerWidget(),
+                child: SideBannerImageWidget(),
               ),
               horizontalSpaceLarge,
               Expanded(

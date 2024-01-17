@@ -7,7 +7,7 @@ import '../app.router.dart';
 
 abstract class ScreenManagerService {
   void goToPublicProfileScreen(Profile? profile);
-  void goToMyProfileScreen(Profile? profile);
+  void goToMyProfileScreen({Profile? profile});
   void goToSubscriptionScreen({bool shouldReplace = false});
   void goToPrivacyPolicyScreen();
   void goToTermsScreen();
@@ -15,6 +15,8 @@ abstract class ScreenManagerService {
       {String? title, String? message, PageRouteInfo<dynamic>? pageRoute});
   void goToPublicWorkAndExperiecesScreen(Profile? profile);
   void goTo(PageRouteInfo pageRouteInfo);
+  void goHome();
+  void back();
 }
 
 class ScreenManagerServiceImpl implements ScreenManagerService {
@@ -30,7 +32,7 @@ class ScreenManagerServiceImpl implements ScreenManagerService {
   }
 
   @override
-  void goToMyProfileScreen(Profile? profile) {
+  void goToMyProfileScreen({Profile? profile}) {
     _routerService.navigateTo(MyProfileViewRoute(profile: profile));
   }
 
@@ -66,5 +68,15 @@ class ScreenManagerServiceImpl implements ScreenManagerService {
   @override
   void goToPublicWorkAndExperiecesScreen(Profile? profile) {
     _routerService.navigateTo(WorkViewRoute(profile: profile));
+  }
+
+  @override
+  void goHome() {
+    _routerService.navigateToPath(path: "/");
+  }
+
+  @override
+  void back() {
+    _routerService.back();
   }
 }

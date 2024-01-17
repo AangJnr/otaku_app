@@ -13,7 +13,8 @@ class PublicProfileViewModel extends ViewModel<BaseViewState> {
     final key = Uri.base.queryParameters['key'] ?? "";
 
     getLogger('ProfileViewModel').e(profile.toString());
-    profile ??= await runBusyFuture(locator<UserRepository>().getProfile(key));
+    profile ??=
+        await runBusyFuture(locator<UserRepository>().getPublicProfile(key));
     if (profile == null) {
       screenManager.goToSubscriptionScreen(shouldReplace: true);
     }
@@ -21,7 +22,6 @@ class PublicProfileViewModel extends ViewModel<BaseViewState> {
     viewState = ProfileLoadedViewState(profile);
 
     super.init(key: key, profile: profile);
-
   }
 }
 

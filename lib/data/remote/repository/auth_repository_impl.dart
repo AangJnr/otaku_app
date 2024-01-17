@@ -1,115 +1,46 @@
 import 'package:multiple_result/multiple_result.dart';
-import 'package:otaku_katarougu_app/app/app.logger.dart';
-import 'package:otaku_katarougu_app/data/model/profile_response/profile_response.dart';
-import 'package:otaku_katarougu_app/domain/model/category/category.dart';
-import 'package:otaku_katarougu_app/domain/model/profile/profile.dart';
-import 'package:otaku_katarougu_app/domain/model/subscription.dart';
-import 'package:otaku_katarougu_app/domain/model/upload_photo_request.dart';
-import 'package:otaku_katarougu_app/domain/repository/user_repository.dart';
-
-import '../../model/category_response/category_response.dart';
-import '../../model/subscription_response.dart';
+import 'package:otaku_katarougu_app/data/model/auth/verify_user_request.dart';
+import 'package:otaku_katarougu_app/domain/repository/auth_repository.dart';
+import '../../../app/app.locator.dart';
+import '../../../app/services/social_auth_service.dart';
 import 'base_repository.dart';
 
-class UserRepositoryImpl with BaseRepository implements UserRepository {
-  static Profile? profileCache;
+class AuthRepositoryImpl with BaseRepository implements AuthRepository {
   @override
-  Future<Result<Subscription, Exception>> createAccount(
-      SubscriptionRequest subscriptionRequest) async {
+  Future<Result<String, Exception>> sendVerificationLink(String email) async {
     var data =
-        await processRequest(() => apiService.createUser(subscriptionRequest));
+        await processRequest(() => apiService.sendVerificationLink(email));
     if (data.isSuccess()) {
-      //Save token
-      sessionManager.setAccessToken(
-          (data.tryGetSuccess()! as Map<String, dynamic>)['token']);
-      return await subscribe(subscriptionRequest);
+      return Success(data.tryGetSuccess()!.toString());
     }
     return Future.value(Error(data.tryGetError()!));
   }
 
   @override
-  Future<Result<Subscription, Exception>> getActiveSubscription() async {
-    var data = await processRequest(() => apiService.activeSubscription());
+  Future<Result<UserVerifiedResponseApi, Exception>> signInWithGoogle(
+      String idToken) async {
+    var data = await processRequest(() => apiService.signInWithGoogle(idToken));
     if (data.isSuccess()) {
-      return Success(
-          SubscriptionResponse.fromMap(data.tryGetSuccess()!).mapToDomain());
+      final userVerified =
+          UserVerifiedResponseApi.fromMap(data.tryGetSuccess()!);
+      sessionManager.setAccessToken(userVerified.token);
+      return Success(userVerified);
     }
     return Future.value(Error(data.tryGetError()!));
   }
 
   @override
-  Future<Result<List<Category>, Exception>> getCategories() async {
-    var data = await processRequest(() => apiService.getCategories());
-    try {
-      if (data.isSuccess()) {
-        List<dynamic> dataList = data.tryGetSuccess()!;
-        return Success(dataList
-            .map((e) => CategoryResponse.fromMap(e).mapToDomain())
-            .toList());
+  Future<Result<UserVerifiedResponseApi, Exception>> verifyUser(
+      String token) async {
+    var data = await processRequest(() => apiService.verifyEmail(token));
+    if (data.isSuccess()) {
+      final userVerified =
+          UserVerifiedResponseApi.fromMap(data.tryGetSuccess()!);
+      if (await locator<SocialAuthService>()
+          .verifyAccessTokenAndSignIn(userVerified.token)) {
+        sessionManager.setAccessToken(userVerified.token);
+        return Success(userVerified);
       }
-    } catch (e) {
-      getLogger('UserRepo').e(e.toString());
-    }
-    return Future.value(Error(data.tryGetError() ?? Exception()));
-  }
-
-  @override
-  Future<Profile?> getPublicProfile(String uid) async {
-    if (profileCache != null) {
-      return profileCache;
-    }
-    var data = await processRequest(() => apiService.getPublicProfile(uid));
-    if (data.isSuccess()) {
-      profileCache =
-          ProfileResponse.fromMap(data.tryGetSuccess()!).mapToDomain();
-      return profileCache;
-    }
-    return Future.value(null);
-  }
-
-  @override
-  Future<Result<List<Profile>, Exception>> getProfiles() async {
-    var data = await processRequest(() => apiService.getMyProfiles());
-    if (data.isSuccess()) {
-      final responseData = data.tryGetSuccess()! as List<dynamic>;
-      return Success(responseData
-          .map((e) => ProfileResponse.fromMap(e).mapToDomain())
-          .toList());
-    }
-    return const Success([]);
-  }
-
-  @override
-  Future<Result<Subscription, Exception>> subscribe(
-      SubscriptionRequest subscriptionRequest) async {
-    var data =
-        await processRequest(() => apiService.subscribe(subscriptionRequest));
-    if (data.isSuccess()) {
-      final payload = data.tryGetSuccess()!;
-      return Success(
-          SubscriptionResponse.fromMap(payload['subscription']).mapToDomain());
-    }
-    return Future.value(Error(data.tryGetError()!));
-  }
-
-  @override
-  Future<Result<Profile, Exception>> updateProfile(
-      String uid, Profile profile) async {
-    var data = await processRequest(() => apiService.editProfile(uid, profile));
-    if (data.isSuccess()) {
-      return Success(
-          ProfileResponse.fromMap(data.tryGetSuccess()!).mapToDomain());
-    }
-    return Future.value(Error(data.tryGetError()!));
-  }
-
-  @override
-  Future<Result<bool, Exception>> updateProfilePhoto(
-      UploadPhotoRequest uploadPhotoRequest) async {
-    var data =
-        await processRequest(() => apiService.uploadPhoto(uploadPhotoRequest));
-    if (data.isSuccess()) {
-      return const Success(true);
     }
     return Future.value(Error(data.tryGetError()!));
   }

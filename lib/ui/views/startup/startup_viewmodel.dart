@@ -10,7 +10,7 @@ class StartupViewModel extends BaseViewModel {
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
     final key =
-        Uri.base.queryParameters['key'];// ??"uJVFpwN9KlVsrneU3QdBOrxtjjf9";
+        Uri.base.queryParameters['key']; // ??"uJVFpwN9KlVsrneU3QdBOrxtjjf9";
 
     if (key == null) {
       locator<ScreenManagerService>()
@@ -18,7 +18,7 @@ class StartupViewModel extends BaseViewModel {
       return;
     }
     final profile =
-        await runBusyFuture(locator<UserRepository>().getProfile(key));
+        await runBusyFuture(locator<UserRepository>().getPublicProfile(key));
 
     if (profile == null) {
       locator<ScreenManagerService>().goToSubscriptionScreen();

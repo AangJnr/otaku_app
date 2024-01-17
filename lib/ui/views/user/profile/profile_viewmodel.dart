@@ -1,5 +1,5 @@
 import 'package:otaku_katarougu_app/app/app.locator.dart';
-import 'package:otaku_katarougu_app/app/app.logger.dart';
+import 'package:otaku_katarougu_app/app/services/social_auth_service.dart';
 import 'package:otaku_katarougu_app/domain/model/profile/profile.dart';
 
 import '../../../../domain/repository/user_repository.dart';
@@ -9,21 +9,39 @@ import '../../base/viewmodel.dart';
 class MyProfileViewModel extends ViewModel<BaseViewState> {
   @override
   void init({String? key, Profile? profile}) async {
-    final key = Uri.base.queryParameters['key'] ?? "";
+    super.init();
 
-    getLogger('ProfileViewModel').e(profile.toString());
-    profile ??= await runBusyFuture(locator<UserRepository>().getProfile(key));
-    if (profile == null) {
-      screenManager.goToSubscriptionScreen(shouldReplace: true);
+    if (!await locator<SocialAuthService>().isSignedIn()) {
+      viewState = NotLoggedInState();
+      goToLogin();
+      return;
     }
-    profile = profile!;
-    viewState = ProfileLoadedViewState(profile);
 
-    super.init(key: key, profile: profile);
+    (await runBusyFuture(locator<UserRepository>().getProfiles())).when(
+        (profiles) {
+      viewState = MyProfilesLoadedViewState(profiles);
+    }, (error) {
+      setError(error);
+      showErrorDialog(
+          description:
+              "Something happened! We are investigating the issue. Sit tight!");
+    });
   }
+
+  void setEditProfileState() {}
 }
 
-class ProfileLoadedViewState extends InitialState {
+class MyProfilesLoadedViewState extends InitialState {
+  final List<Profile> profiles;
+  MyProfilesLoadedViewState(this.profiles);
+}
+
+class NoProfilesViewState extends InitialState {
+  NoProfilesViewState();
+}
+
+class EditProfilesViewState extends InitialState {
   final Profile profile;
-  ProfileLoadedViewState(this.profile) : super();
+
+  EditProfilesViewState({this.profile = const Profile()});
 }

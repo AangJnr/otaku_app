@@ -24,9 +24,9 @@ class WorkViewDesktop extends ViewModelWidget<WorkViewModel> {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-           const   Expanded(
+              const Expanded(
                 flex: 2,
-                child: BannerWidget(),
+                child: SideBannerImageWidget(),
               ),
               horizontalSpaceLarge,
               Expanded(

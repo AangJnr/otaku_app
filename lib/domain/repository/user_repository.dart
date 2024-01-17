@@ -9,12 +9,12 @@ abstract class UserRepository {
   Future<Result<Profile, Exception>> updateProfile(String uid, Profile profile);
   Future<Result<bool, Exception>> updateProfilePhoto(
       UploadPhotoRequest uploadPhotoRequest);
-  Future<Profile?> getProfile(String uid);
+  Future<Profile?> getPublicProfile(String uid);
+   Future<Result<List<Profile>, Exception>> getProfiles();
   Future<Result<Subscription, Exception>> getActiveSubscription();
   Future<Result<List<Category>, Exception>> getCategories();
   Future<Result<Subscription, Exception>> subscribe(
       SubscriptionRequest subscriptionRequest);
   Future<Result<Subscription, Exception>> createAccount(
       SubscriptionRequest subscriptionRequest);
-  Future<Result<String, Exception>> sendVerificationLink(String email);
 }

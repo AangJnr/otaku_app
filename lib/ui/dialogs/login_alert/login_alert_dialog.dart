@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:otaku_katarougu_app/app/app.locator.dart';
+import 'package:otaku_katarougu_app/app/services/screen_manager.dart';
 import 'package:otaku_katarougu_app/main.dart';
 import 'package:otaku_katarougu_app/ui/common/app_colors.dart';
 import 'package:otaku_katarougu_app/ui/common/ui_helpers.dart';
@@ -7,6 +9,7 @@ import 'package:otaku_katarougu_app/ui/widgets/primary_button_widget.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../views/base/view_state.dart';
+import '../../widgets/circle_butto_widget.dart';
 import '../../widgets/error_widget.dart';
 import 'login_alert_dialog_model.dart';
 
@@ -119,12 +122,22 @@ class LoginAlertDialog extends StackedView<LoginAlertDialogModel> {
           initialValue: viewModel.email,
         ),
         verticalSpaceMedium,
-         const Text(
+        const Text(
           "OR",
           style: TextStyle(fontSize: 20, color: kcBlack),
-         ),
+        ),
         verticalSpaceMedium,
-
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CircleIconButtonWidget(
+              onTap: viewModel.performGoogleSignIn,
+              assetUrl: 'assets/icons/google_coloured.png',
+              textColor: viewModel.appTheme.primaryTextColor,
+            ),
+          ],
+        ),
+        verticalSpaceMedium,
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
@@ -156,28 +169,34 @@ class LoginAlertDialog extends StackedView<LoginAlertDialogModel> {
 
   Widget _buildSuccessMessage(BuildContext context, String message) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        verticalSpaceMedium,
-        Text(
-          'Success!',
-          style: Theme.of(context).primaryTextTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w900,
-              height: 1.4,
-              color: Colors.black,
-              fontSize: 30),
-        ),
-        verticalSpaceLarge,
-        Text(
-          message,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 14, color: kcMediumGrey),
-          softWrap: true,
-        ),
-        verticalSpaceMedium,
-      ],
-    );
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          verticalSpaceMedium,
+          Text(
+            'Success!',
+            style: Theme.of(context).primaryTextTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w900,
+                height: 1.4,
+                color: Colors.black,
+                fontSize: 30),
+          ),
+          verticalSpaceLarge,
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 14, color: kcMediumGrey),
+            softWrap: true,
+          ),
+          verticalSpaceMedium,
+          PrimaryButtonWidget(
+            "Back To Home",
+            onTap: () => locator<ScreenManagerService>()
+                .goToSubscriptionScreen(shouldReplace: true),
+            showText: true,
+            color: MainApp.appTheme.accentColor,
+          ),
+        ]);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:otaku_katarougu_app/ui/views/base/viewmodel.dart';
@@ -6,7 +7,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../domain/model/profile/profile.dart';
-import '../../../domain/model/profile/socials.dart';
+import '../circle_butto_widget.dart';
 import '../material_inkwell.dart';
 
 class SocialButtons extends StackedView<SocialButtonsViewModel> {
@@ -25,81 +26,81 @@ class SocialButtons extends StackedView<SocialButtonsViewModel> {
               spacing: 20,
               runSpacing: 20,
               children: [
-                    if(profile.socials.whatsapp.isNotEmpty)
-                _buildRowItem("WhatsApp",
+                if (profile.socials.whatsapp.isNotEmpty)
+                  CircleIconButtonWidget(
+                    label: "WhatsApp",
                     style: style,
                     color: viewModel.appTheme.tertiaryBackgroundColor,
-                    onTap: () =>
-                        viewModel.launchSocialLink(
-                          Social.WhatsApp,
-                          profile.socials.whatsapp.replaceFirst('+', '')),
+                    onTap: () => viewModel.launchSocialLink(Social.WhatsApp,
+                        profile.socials.whatsapp.replaceFirst('+', '')),
                     iconData: FontAwesomeIcons.whatsapp,
                     assetUrl: 'assets/icons/whatsapp.png',
                     textColor: viewModel.appTheme.primaryTextColor,
-                    isMobile: s.isMobile),
-                                    if (profile.email.isNotEmpty)
-
-                _buildRowItem("Send an e-mail",
+                  ),
+                if (profile.email.isNotEmpty)
+                  CircleIconButtonWidget(
+                    label: "Send an e-mail",
                     style: style,
                     color: viewModel.appTheme.tertiaryBackgroundColor,
                     onTap: () => viewModel.launchEmail(profile.email),
                     assetUrl: 'assets/icons/gmail.png',
                     iconData: FontAwesomeIcons.envelope,
                     textColor: viewModel.appTheme.primaryTextColor,
-                    isMobile: s.isMobile),
-                                    if (profile.phone.isNotEmpty)
-
-                _buildRowItem("Call",
-                    color: viewModel.appTheme.tertiaryBackgroundColor,
+                  ),
+                if (profile.phone.isNotEmpty)
+                  CircleIconButtonWidget(
+                    label: "Call",
                     style: style,
+                    color: viewModel.appTheme.tertiaryBackgroundColor,
                     onTap: () => viewModel.makePhoneCall(profile.phone),
                     iconData: FontAwesomeIcons.phone,
                     assetUrl: 'assets/icons/phone.png',
                     textColor: viewModel.appTheme.primaryTextColor,
-                    isMobile: s.isMobile),
+                  ),
                 if (profile.socials.facebook.isNotEmpty)
-
-                _buildRowItem("Facebook",
+                  CircleIconButtonWidget(
+                    label: "Facebook",
                     color: viewModel.appTheme.tertiaryBackgroundColor,
                     style: style,
-                    onTap: () =>
-                        viewModel.launchSocialLink(
+                    onTap: () => viewModel.launchSocialLink(
                         Social.Facebook, profile.socials.facebook),
                     iconData: FontAwesomeIcons.facebook,
                     textColor: viewModel.appTheme.primaryTextColor,
                     assetUrl: 'assets/icons/facebook.png',
-                    isMobile: s.isMobile),
-                                   if (profile.socials.linkedIn.isNotEmpty)
- _buildRowItem("LinkedIn",
+                  ),
+                if (profile.socials.linkedIn.isNotEmpty)
+                  CircleIconButtonWidget(
+                    label: "LinkedIn",
                     style: style,
                     color: viewModel.appTheme.tertiaryBackgroundColor,
-                    onTap: () =>
-                       viewModel.launchSocialLink(
+                    onTap: () => viewModel.launchSocialLink(
                         Social.LinkedIn, profile.socials.linkedIn),
                     iconData: FontAwesomeIcons.linkedin,
                     assetUrl: 'assets/icons/linkedin.png',
                     textColor: viewModel.appTheme.primaryTextColor,
-                    isMobile: s.isMobile),
-                                  if (profile.socials.twitter.isNotEmpty)
-  _buildRowItem("Twitter",
-                    style: style,
-                    color: viewModel.appTheme.tertiaryBackgroundColor,
-                    onTap: () =>  viewModel.launchSocialLink(
-                        Social.Twitter, profile.phone),
-                    iconData: FontAwesomeIcons.twitter,
-                    assetUrl: 'assets/icons/twitter.png',
-                    textColor: viewModel.appTheme.primaryTextColor,
-                    isMobile: s.isMobile),
-                                   if (profile.socials.instagram.isNotEmpty)
- _buildRowItem("Instagram",
+                  ),
+                if (profile.socials.twitter.isNotEmpty)
+                  CircleIconButtonWidget(
+                    label: "Twitter",
                     style: style,
                     color: viewModel.appTheme.tertiaryBackgroundColor,
                     onTap: () => viewModel.launchSocialLink(
                         Social.Twitter, profile.phone),
+                    iconData: FontAwesomeIcons.twitter,
+                    assetUrl: 'assets/icons/twitter.png',
+                    textColor: viewModel.appTheme.primaryTextColor,
+                  ),
+                if (profile.socials.instagram.isNotEmpty)
+                  CircleIconButtonWidget(
+                    label: "Instagram",
+                    style: style,
+                    onTap: () => viewModel.launchSocialLink(
+                        Social.Twitter, profile.phone),
                     iconData: FontAwesomeIcons.instagram,
                     assetUrl: 'assets/icons/instagram.png',
+                    color: viewModel.appTheme.tertiaryBackgroundColor,
                     textColor: viewModel.appTheme.primaryTextColor,
-                    isMobile: s.isMobile),
+                  ),
               ],
             ));
 
@@ -118,44 +119,6 @@ class SocialButtons extends StackedView<SocialButtonsViewModel> {
     //               letterSpacing: 2),
     //         )),
     //   );
-  }
-
-  _buildRowItem(String label,
-      {TextStyle? style,
-      VoidCallback? onTap,
-      IconData? iconData,
-      String? assetUrl,
-      Color? color,
-      Color? textColor,
-      bool isMobile = false}) {
-    return MaterialInkWell(
-      onTap: onTap,
-      splashColor: Colors.grey[200],
-      padding: const EdgeInsets.all(12),
-      radiusValue: 30,
-      color: color,
-      child: Row(mainAxisSize: MainAxisSize.min, children: [
-        if (assetUrl == null)
-          FaIcon(
-            iconData,
-            color: Colors.black,
-            size: 14,
-          )
-        else
-          Image.asset(
-            assetUrl,
-            height: 30,
-            width: 30,
-            color: textColor,
-          ),
-        if (!!isMobile) ...[
-          const SizedBox(
-            width: 10,
-          ),
-          Text(label, style: style?.copyWith(color: textColor))
-        ]
-      ]),
-    );
   }
 
   @override

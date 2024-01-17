@@ -37,6 +37,19 @@ class PublicProfileWidget extends StatelessWidget {
       BaseViewState state, BuildContext context, AppTheme theme) {
     switch (state) {
       case ProfileLoadedViewState():
+      if (state.profile.isIncompleteProfile) {
+          return InfoWindow(
+            positiveAction: () {
+              viewModel.goToLogin();
+            },
+            positiveText: 'Login to complete profile',
+            buttonColor: viewModel.appTheme.accentColor,
+            title1: 'Incomplete',
+            title2: ' Profile!',
+            message:
+                'If you are the owner of this profile, Kindly complete your profile now to unlock a better user experience and personalized content. It\'s quick and easy – just a few clicks away!',
+          );
+        }
         return Column(children: [
           buildTitleAndRoleWidget(context, theme),
           verticalSpaceLarge,

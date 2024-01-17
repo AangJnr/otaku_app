@@ -64,7 +64,7 @@ class SubscriptionAlertDialog
               fontSize: 30),
         ),
         verticalSpaceLarge,
-        LoadingWidget(),
+       const LoadingWidget(),
         verticalSpaceLarge
       ],
     );

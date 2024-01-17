@@ -5,6 +5,7 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:flutter/foundation.dart' as _i12;
 import 'package:flutter/material.dart' as _i10;
 import 'package:stacked/stacked.dart' as _i9;
 import 'package:stacked_services/stacked_services.dart' as _i8;
@@ -175,7 +176,7 @@ class StartupViewRoute extends _i9.PageRouteInfo<void> {
 class PublicProfileViewRoute extends _i9.PageRouteInfo<PublicProfileViewArgs> {
   PublicProfileViewRoute({
     _i11.Profile? profile,
-    _i10.Key? key,
+    _i12.Key? key,
   }) : super(
           PublicProfileViewRoute.name,
           path: '/public-profile',
@@ -196,7 +197,7 @@ class PublicProfileViewArgs {
 
   final _i11.Profile? profile;
 
-  final _i10.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -209,7 +210,7 @@ class PublicProfileViewArgs {
 class MyProfileViewRoute extends _i9.PageRouteInfo<MyProfileViewArgs> {
   MyProfileViewRoute({
     _i11.Profile? profile,
-    _i10.Key? key,
+    _i12.Key? key,
   }) : super(
           MyProfileViewRoute.name,
           path: '/me',
@@ -230,7 +231,7 @@ class MyProfileViewArgs {
 
   final _i11.Profile? profile;
 
-  final _i10.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -243,7 +244,7 @@ class MyProfileViewArgs {
 class WorkViewRoute extends _i9.PageRouteInfo<WorkViewArgs> {
   WorkViewRoute({
     _i11.Profile? profile,
-    _i10.Key? key,
+    _i12.Key? key,
   }) : super(
           WorkViewRoute.name,
           path: '/relevant-experience',
@@ -264,7 +265,7 @@ class WorkViewArgs {
 
   final _i11.Profile? profile;
 
-  final _i10.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -315,7 +316,7 @@ class UnknownViewRoute extends _i9.PageRouteInfo<UnknownViewArgs> {
     String? title = '404',
     _i9.PageRouteInfo<dynamic>? pageRoute,
     String? message = 'PAGE NOT FOUND',
-    _i10.Key? key,
+    _i12.Key? key,
   }) : super(
           UnknownViewRoute.name,
           path: '/unknown',
@@ -344,7 +345,7 @@ class UnknownViewArgs {
 
   final String? message;
 
-  final _i10.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -363,7 +364,7 @@ extension RouterStateExtension on _i8.RouterService {
 
   Future<dynamic> navigateToPublicProfileView({
     _i11.Profile? profile,
-    _i10.Key? key,
+    _i12.Key? key,
     void Function(_i9.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
@@ -377,7 +378,7 @@ extension RouterStateExtension on _i8.RouterService {
 
   Future<dynamic> navigateToMyProfileView({
     _i11.Profile? profile,
-    _i10.Key? key,
+    _i12.Key? key,
     void Function(_i9.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
@@ -391,7 +392,7 @@ extension RouterStateExtension on _i8.RouterService {
 
   Future<dynamic> navigateToWorkView({
     _i11.Profile? profile,
-    _i10.Key? key,
+    _i12.Key? key,
     void Function(_i9.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
@@ -431,7 +432,7 @@ extension RouterStateExtension on _i8.RouterService {
     String? title = '404',
     _i9.PageRouteInfo<dynamic>? pageRoute,
     String? message = 'PAGE NOT FOUND',
-    _i10.Key? key,
+    _i12.Key? key,
     void Function(_i9.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
@@ -455,7 +456,7 @@ extension RouterStateExtension on _i8.RouterService {
 
   Future<dynamic> replaceWithPublicProfileView({
     _i11.Profile? profile,
-    _i10.Key? key,
+    _i12.Key? key,
     void Function(_i9.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
@@ -469,7 +470,7 @@ extension RouterStateExtension on _i8.RouterService {
 
   Future<dynamic> replaceWithMyProfileView({
     _i11.Profile? profile,
-    _i10.Key? key,
+    _i12.Key? key,
     void Function(_i9.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
@@ -483,7 +484,7 @@ extension RouterStateExtension on _i8.RouterService {
 
   Future<dynamic> replaceWithWorkView({
     _i11.Profile? profile,
-    _i10.Key? key,
+    _i12.Key? key,
     void Function(_i9.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
@@ -523,7 +524,7 @@ extension RouterStateExtension on _i8.RouterService {
     String? title = '404',
     _i9.PageRouteInfo<dynamic>? pageRoute,
     String? message = 'PAGE NOT FOUND',
-    _i10.Key? key,
+    _i12.Key? key,
     void Function(_i9.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(

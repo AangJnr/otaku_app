@@ -27,7 +27,7 @@ class PublicProfileViewDesktop extends ViewModelWidget<PublicProfileViewModel> {
             children: [
               const Expanded(
                 flex: 2,
-                child: BannerWidget(),
+                child: SideBannerImageWidget(),
               ),
               horizontalSpaceLarge,
               Expanded(
