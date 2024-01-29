@@ -6,7 +6,7 @@ import '../app.locator.dart';
 import '../app.router.dart';
 
 abstract class ScreenManagerService {
-  void goToPublicProfileScreen(Profile? profile);
+  void goToPublicProfileScreen(Profile? profile, {String? key});
   void goToMyProfileScreen({Profile? profile});
   void goToSubscriptionScreen({bool shouldReplace = false});
   void goToPrivacyPolicyScreen();
@@ -21,7 +21,6 @@ abstract class ScreenManagerService {
 
 class ScreenManagerServiceImpl implements ScreenManagerService {
   final _routerService = locator<RouterService>();
-
   @override
   void goToUnknownScreen(
       {String? title, String? message, PageRouteInfo? pageRoute}) {
@@ -42,8 +41,13 @@ class ScreenManagerServiceImpl implements ScreenManagerService {
   }
 
   @override
-  void goToPublicProfileScreen(Profile? profile) {
-    _routerService.navigateTo(PublicProfileViewRoute(profile: profile));
+  void goToPublicProfileScreen(Profile? profile, {String? key}) {
+    final pageRoute = PublicProfileViewRoute(profile: profile);
+
+    _routerService.navigateTo(PageRouteInfo(pageRoute.routeName,
+        path: pageRoute.path,
+        rawQueryParams: {"user": key ?? profile?.uid},
+        args: pageRoute.args));
   }
 
   @override

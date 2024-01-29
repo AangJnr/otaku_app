@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:otaku_katarougu_app/ui/widgets/primary_button_widget.dart';
 import 'package:stacked/stacked.dart';
 
- import 'unknown_viewmodel.dart';
+import 'unknown_viewmodel.dart';
 
 class UnknownViewDesktop extends ViewModelWidget<UnknownViewModel> {
   final String? message;

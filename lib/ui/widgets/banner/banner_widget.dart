@@ -41,7 +41,7 @@ class SideBannerImageWidget extends StackedView<BannerViewModel> {
 class BannerViewModel extends ViewModel<BaseViewState> {
   @override
   void init({String? key, Profile? profile}) async {
-    super.init(key: key);
+    super.init();
 
     rebuildUi();
   }

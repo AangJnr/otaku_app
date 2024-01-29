@@ -98,15 +98,31 @@ class LoginAlertDialog extends StackedView<LoginAlertDialogModel> {
       mainAxisSize: MainAxisSize.min,
       children: [
         verticalSpaceMedium,
-        Text(
-          'Login',
-          style: Theme.of(context).primaryTextTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w900,
-              height: 1.4,
-              color: Colors.black,
-              fontSize: 30),
+        RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'Log into your\t',
+                style: Theme.of(context).primaryTextTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w900,
+                    height: 1.4,
+                    color: Colors.black,
+                    fontSize: 30),
+              ),
+              TextSpan(
+                text: "Account",
+                style: Theme.of(context).primaryTextTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w900,
+                      height: 1.4,
+                      color: viewModel.appTheme.accentColor,
+                      fontSize: 30,
+                    ),
+              ),
+            ],
+          ),
         ),
-        verticalSpaceLarge,
+        verticalSpaceMedium,
         const Text(
           "A verification link will be sent to your email address to verify your account.",
           style: TextStyle(fontSize: 14, color: kcMediumGrey),
@@ -121,12 +137,17 @@ class LoginAlertDialog extends StackedView<LoginAlertDialogModel> {
           onChanged: viewModel.updateEmail,
           initialValue: viewModel.email,
         ),
-        verticalSpaceMedium,
-        const Text(
+        Text(
           "OR",
-          style: TextStyle(fontSize: 20, color: kcBlack),
+          style: Theme.of(context).primaryTextTheme.titleMedium?.copyWith(
+                fontSize: 15,
+                color: kcMediumGrey,
+                fontWeight: FontWeight.w900,
+              ),
         ),
-        verticalSpaceMedium,
+
+        // Divider(indent: 50, endIndent: 50,),
+        const SizedBox(height: 20),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -148,7 +169,7 @@ class LoginAlertDialog extends StackedView<LoginAlertDialogModel> {
                 confirmed: false,
               )),
               showText: true,
-              color: Colors.red[400],
+              color: Colors.red[500],
             ),
             horizontalSpaceMedium,
             PrimaryButtonWidget(
@@ -163,6 +184,7 @@ class LoginAlertDialog extends StackedView<LoginAlertDialogModel> {
             ),
           ],
         ),
+        verticalSpaceSmall,
       ],
     );
   }

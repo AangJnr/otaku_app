@@ -6,10 +6,12 @@ abstract class ApiRoutes {
   final url = Url.shared.base;
 }
 
-class User extends ApiRoutes {
+class UserRoute extends ApiRoutes {
   String PublicProfile(String uid) => "$url/user/public-profile/$uid";
   String MyActiveProfile(String uid) => "$url/user/profile/me";
   get MyProfiles => "$url/user/profiles";
+  get Me => "$url/user/me";
+  get SignUp => "$url/user/create";
 
   String Profile(String uid) => "$url/user/profile/$uid";
 
@@ -19,7 +21,6 @@ class User extends ApiRoutes {
 }
 
 class Auth extends ApiRoutes {
-  get SignUp => "$url/auth/user/create";
   String sendEmailVerificationLink(String email) =>
       "$url/auth/send-verification-link/$email";
   get SignInWithGoogle => "$url/auth/social-login/google";

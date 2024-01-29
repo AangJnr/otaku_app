@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:otaku_katarougu_app/app/app.locator.dart';
+import 'package:otaku_katarougu_app/app/app.logger.dart';
+import 'package:otaku_katarougu_app/app/services/screen_manager.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
 

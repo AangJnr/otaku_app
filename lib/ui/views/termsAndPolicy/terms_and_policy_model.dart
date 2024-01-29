@@ -7,13 +7,14 @@ import '../base/view_state.dart';
 import '../base/viewmodel.dart';
 
 class TermsAndPolicyModel extends ViewModel<BaseViewState> {
-   String get data => locator<RouterService>().router.current.path.contains("terms")
-        ? termsAndConditions
-        : privacyPolicy;
+  String get data =>
+      locator<RouterService>().router.current.path.contains("terms")
+          ? termsAndConditions
+          : privacyPolicy;
 
   @override
   void init({String? key, Profile? profile}) {
-    super.init(key: key);
-     rebuildUi();
+    super.init();
+    rebuildUi();
   }
 }

@@ -37,7 +37,7 @@ class PublicProfileWidget extends StatelessWidget {
       BaseViewState state, BuildContext context, AppTheme theme) {
     switch (state) {
       case ProfileLoadedViewState():
-      if (state.profile.isIncompleteProfile) {
+        if (state.profile.isIncompleteProfile) {
           return InfoWindow(
             positiveAction: () {
               viewModel.goToLogin();
@@ -113,10 +113,9 @@ class PublicProfileWidget extends StatelessWidget {
         Text(
           "${viewModel.profile.firstName}\n${viewModel.profile.lastName}",
           textAlign: TextAlign.center,
-          style: Theme.of(context)
-              .primaryTextTheme
-              .titleLarge
-              ?.copyWith(color: theme.accentColor),
+          style: Theme.of(context).primaryTextTheme.titleLarge?.copyWith(
+                color: theme.accentColor,
+              ),
         ),
         RichText(
           textAlign: TextAlign.center,
@@ -133,7 +132,7 @@ class PublicProfileWidget extends StatelessWidget {
                 style: Theme.of(context).primaryTextTheme.titleSmall?.copyWith(
                     color: theme.primaryTextColor,
                     letterSpacing: 3,
-                    fontSize: 15),
+                    fontSize: 13),
               ),
             ],
           ),

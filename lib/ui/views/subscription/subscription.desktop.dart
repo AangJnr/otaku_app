@@ -2,7 +2,9 @@ import 'package:otaku_katarougu_app/ui/common/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:otaku_katarougu_app/ui/common/ui_helpers.dart';
 import 'package:otaku_katarougu_app/ui/widgets/loading.dart';
+import 'package:otaku_katarougu_app/ui/widgets/topbar_widget.dart';
 import 'package:stacked/stacked.dart';
+import '../../../utils/utilities.dart';
 import '../../widgets/footer/links_widget.dart';
 import '../../widgets/logo_widget.dart';
 import 'pager.dart';
@@ -28,9 +30,16 @@ class SubscriptionDesktop extends ViewModelWidget<SubscriptionModel> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const LogoWidget(
-                size: Size(80, 80),
-                //isLight: Utils.isColorLight(theme.panelBackgroundColor),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  LogoWidget(
+                    size: const Size(80, 80),
+                    isLight: Utils.isColorLight(theme.panelBackgroundColor),
+                  ),
+                const  Expanded(child:  TopbarWidget())
+                ],
               ),
               Expanded(
                 child: Material(
@@ -101,7 +110,7 @@ class SubscriptionDesktop extends ViewModelWidget<SubscriptionModel> {
                             borderRadius: borderRadius,
                           ),
                           child: viewModel.isBusy
-                              ? LoadingWidget()
+                              ? const LoadingWidget()
                               : const CategoriesPagerWidget(),
                         )),
                       ],

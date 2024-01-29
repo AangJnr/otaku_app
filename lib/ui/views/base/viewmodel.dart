@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:otaku_katarougu_app/app/app.dialogs.dart';
 import 'package:otaku_katarougu_app/app/app.locator.dart';
 import 'package:otaku_katarougu_app/app/app.logger.dart';
+import 'package:otaku_katarougu_app/data/local/session_manager_service.dart';
+import 'package:otaku_katarougu_app/domain/model/session_manager.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,7 +16,9 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../config/theme_setup.dart';
 import '../../../app/services/screen_manager.dart';
 import '../../../domain/model/profile/profile.dart';
+import '../../../domain/model/user.dart';
 import '../../../main.dart';
+import '../../dialogs/login_alert/login_alert_dialog_model.dart';
 import 'view_state.dart';
 
 enum Social { WhatsApp, Instagram, LinkedIn, Twitter, Facebook, Email, Phone }
@@ -32,14 +36,32 @@ class ViewModel<T extends BaseViewState> extends BaseViewModel {
   ScreenManagerService get screenManager => _screenManager;
   AppTheme get appTheme => MainApp.appTheme;
   InitialState get viewState => _viewState;
+  User get user => sessionManager.getUser();
 
   String get bannerImageUrl => _image;
   bool get bannerImageLoaded => _image.isNotEmpty;
 
-  void init({String? key, Profile? profile}) async {
+  SessionManager get sessionManager => locator<SessionManager>();
+
+  void init({Profile? profile}) async {
+    if (profile != null) {
+      _profile = profile;
+    }
     final listOfAssets = await getAssetPaths();
     _image = listOfAssets[Random().nextInt(listOfAssets.length)];
     rebuildUi();
+  }
+
+  @override
+  void setBusyForObject(Object? object, bool value) {
+    if (value) viewState = LoadingViewState();
+    super.setBusyForObject(object, value);
+  }
+
+  @override
+  void setBusy(bool value) {
+    if (value) viewState = LoadingViewState();
+    super.setBusy(value);
   }
 
   set viewState(InitialState newValue) {
@@ -152,8 +174,8 @@ class ViewModel<T extends BaseViewState> extends BaseViewModel {
         data: data);
   }
 
-
-   Future<DialogResponse?> showErrorDialog({String? title, String? description, dynamic data}) {
+  Future<DialogResponse?> showErrorDialog(
+      {String? title, String? description, dynamic data}) {
     return dialogService.showCustomDialog(
         variant: DialogType.alert,
         title: title,

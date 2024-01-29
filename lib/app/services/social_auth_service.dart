@@ -56,6 +56,11 @@ class SocialAuthServiceImpl extends SocialAuthService {
   }
 
   @override
+  logout() {
+    FirebaseAuth.instance.signOut();
+  }
+
+  @override
   void setUpAuthChanges() {
     // FirebaseAuth.instance.authStateChanges().listen((User? user) {
     //   if (user == null) {
@@ -73,4 +78,5 @@ abstract class SocialAuthService {
   Future<String?> getGoogleAuthToken();
   Future<User?> getCurrentUser();
   void setUpAuthChanges();
+  logout();
 }

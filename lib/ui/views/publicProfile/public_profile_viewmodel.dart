@@ -1,31 +1,37 @@
-import 'package:flutter/foundation.dart';
 import 'package:otaku_katarougu_app/app/app.locator.dart';
 import 'package:otaku_katarougu_app/app/app.logger.dart';
 import 'package:otaku_katarougu_app/domain/model/profile/profile.dart';
 
 import '../../../domain/repository/user_repository.dart';
 import '../base/view_state.dart';
-import '../base/viewmodel.dart';
+import '../base/viewmodel.dart'; //baby boy
 
 class PublicProfileViewModel extends ViewModel<BaseViewState> {
+  String _key = '';
+
   @override
-  void init({String? key, Profile? profile}) async {
-    final key = Uri.base.queryParameters['key'] ?? "";
+  void init({Profile? profile}) async {
+    if (profile != null) {
+      viewState = ProfileLoadedViewState(profile);
+      super.init(profile: profile);
 
-    getLogger('ProfileViewModel').e(profile.toString());
-    profile ??=
-        await runBusyFuture(locator<UserRepository>().getPublicProfile(key));
-    if (profile == null) {
-      screenManager.goToSubscriptionScreen(shouldReplace: true);
+      return;
     }
-    profile = profile!;
-    viewState = ProfileLoadedViewState(profile);
 
-    super.init(key: key, profile: profile);
+    _key = Uri.base.queryParameters['user'] ?? "";
+    (await runBusyFuture(locator<UserRepository>().getPublicProfile(_key)))
+        .when((publicProfile) {
+      viewState = ProfileLoadedViewState(publicProfile!);
+      super.init(profile: publicProfile);
+    }, (error) {
+      screenManager.goToSubscriptionScreen(shouldReplace: false);
+    });
   }
 }
 
+
+
 class ProfileLoadedViewState extends InitialState {
   final Profile profile;
-  ProfileLoadedViewState(this.profile) : super();
+  ProfileLoadedViewState(this.profile);
 }

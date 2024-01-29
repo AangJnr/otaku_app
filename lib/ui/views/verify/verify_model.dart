@@ -10,7 +10,7 @@ class VerifyModel extends ViewModel<BaseViewState> {
   final _authRepository = locator<AuthRepository>();
   @override
   void init({String? key, Profile? profile}) async {
-    super.init(key: key);
+    super.init();
 
     showLoadingDialog(
         title: "Verifying...",

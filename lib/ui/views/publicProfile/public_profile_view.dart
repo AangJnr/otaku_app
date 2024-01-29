@@ -26,7 +26,7 @@ class PublicProfileView extends StackedView<PublicProfileViewModel> {
 
   @override
   void onViewModelReady(PublicProfileViewModel viewModel) {
-    viewModel.init(profile: profile);
+    viewModel.init(profile:profile);
     super.onViewModelReady(viewModel);
   }
 

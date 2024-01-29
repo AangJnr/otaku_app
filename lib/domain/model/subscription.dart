@@ -13,7 +13,9 @@ class Subscription {
       {this.endDate,
       this.price = '',
       this.categoryUid = '',
-      this.startDate, this.email, this.url,
+      this.startDate,
+      this.email,
+      this.url,
       this.uid = ''});
 
   @override
@@ -24,16 +26,18 @@ class Subscription {
   Subscription copyWith({
     DateTime? endDate,
     String? price,
-    String? categoryUid,  String? email,
-    DateTime? startDate,String? url,
+    String? categoryUid,
+    String? email,
+    DateTime? startDate,
+    String? url,
   }) {
     return Subscription(
-      endDate: endDate ?? this.endDate,
-      price: price ?? this.price,
-      categoryUid: categoryUid ?? this.categoryUid,
-      startDate: startDate ?? this.startDate,email:email??this.email,
-      url:url??this.url
-    );
+        endDate: endDate ?? this.endDate,
+        price: price ?? this.price,
+        categoryUid: categoryUid ?? this.categoryUid,
+        startDate: startDate ?? this.startDate,
+        email: email ?? this.email,
+        url: url ?? this.url);
   }
 
   String toRequest() => json.encode({'categoryUid': categoryUid, 'uid': uid});
@@ -44,8 +48,9 @@ class SubscriptionRequest {
   final String email;
   const SubscriptionRequest({required this.categoryUid, required this.email});
 
-  String toRequest() => json.encode({'categoryUid': categoryUid, 'email': email});
+  String toRequest() =>
+      json.encode({'categoryUid': categoryUid, 'email': email});
 
-  String toCreateAccountRequest() => json.encode({'categoryUid': categoryUid, 'email': email});
-
+  String toCreateAccountRequest() =>
+      json.encode({'categoryUid': categoryUid, 'email': email});
 }

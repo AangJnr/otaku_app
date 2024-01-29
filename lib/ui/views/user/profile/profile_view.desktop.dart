@@ -1,11 +1,18 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:otaku_katarougu_app/config/theme_setup.dart';
+import 'package:otaku_katarougu_app/extensions/num_extensions.dart';
 import 'package:otaku_katarougu_app/ui/common/app_constants.dart';
 import 'package:otaku_katarougu_app/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:otaku_katarougu_app/ui/widgets/banner/banner_widget.dart';
 import 'package:otaku_katarougu_app/ui/widgets/loading.dart';
+import 'package:otaku_katarougu_app/ui/widgets/logo_widget.dart';
+import 'package:otaku_katarougu_app/ui/widgets/profile_avatar/profile_me_widget.dart';
 import 'package:stacked/stacked.dart';
-import '../../../widgets/banner/banner_widget.dart';
 import '../../../widgets/material_inkwell.dart';
 import '../../../widgets/topbar_widget.dart';
+import '../../base/view_state.dart';
 import 'profile_viewmodel.dart';
 import 'profile_widget.dart';
 
@@ -14,10 +21,8 @@ class MyProfileViewDesktop extends ViewModelWidget<MyProfileViewModel> {
 
   @override
   Widget build(BuildContext context, MyProfileViewModel viewModel) {
-    final theme = viewModel.appTheme;
-
     return Scaffold(
-      backgroundColor: theme.panelBackgroundColor,
+      backgroundColor: viewModel.appTheme.primaryBackgroundColor,
       body: Center(
         child: SizedBox(
           width: kdDesktopMaxContentWidth,
@@ -25,47 +30,14 @@ class MyProfileViewDesktop extends ViewModelWidget<MyProfileViewModel> {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              const Expanded(
+              Expanded(
                 flex: 2,
-                child: SideBannerImageWidget(),
+                child: _buildLeftSideWidget(viewModel),
               ),
               horizontalSpaceLarge,
               Expanded(
                 flex: 5,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Material(
-                    shadowColor: Colors.black26,
-                    elevation: 0,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(radiusValue),
-                      topRight: Radius.circular(radiusValue),
-                    ),
-                    color: theme.primaryBackgroundColor,
-                    child: SizedBox(
-                      height: double.infinity,
-                      width: double.infinity,
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(top: 20, left: 30, right: 30),
-                        child: Column(
-                          children: [
-                            TopbarWidget(
-                              profile: viewModel.profile,
-                              label: 'PROFILE',
-                              appTheme: viewModel.appTheme,
-                            ),
-                            verticalSpaceMedium,
-                            if (viewModel.isBusy)
-                              const LoadingWidget()
-                            else
-                              Expanded(child: MyProfileWidget(viewModel)),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                child: _buildRightSideWidget(viewModel),
               ),
               horizontalSpaceMedium,
             ],
@@ -75,36 +47,195 @@ class MyProfileViewDesktop extends ViewModelWidget<MyProfileViewModel> {
     );
   }
 
-  Widget buildHeaderItem(label,
-      {TextStyle? style, VoidCallback? onTap, bool isSelected = false}) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: MaterialInkWell(
-        splashColor: Colors.grey[300],
-        onTap: onTap,
+  Widget _buildRightSideWidget(MyProfileViewModel viewModel) {
+    final theme = viewModel.appTheme;
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 30),
+      child: Material(
+        shadowColor: Colors.black26,
+        elevation: 0,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(radiusValue),
+          topRight: Radius.circular(radiusValue),
+        ),
+        color: theme.panelBackgroundColor,
         child: SizedBox(
-          child: Center(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
-              child: Column(
-                children: [
-                  Text(
-                    label,
-                    style: style,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 2),
-                    height: 2,
-                    width: 30,
-                    color: (isSelected) ? Colors.black87 : Colors.transparent,
-                  )
-                ],
-              ),
+          height: double.infinity,
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+            child: Column(
+              children: [
+                TopbarWidget(
+                  profile: viewModel.profile,
+                  label: 'PROFILE',
+                  appTheme: viewModel.appTheme,
+                ),
+                verticalSpaceMedium,
+                Expanded(child: MyProfileWidget()),
+              ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildLeftSideWidget(MyProfileViewModel viewModel) {
+    return ValueListenableBuilder<BaseViewState>(
+      valueListenable: viewModel.viewStateNotifier,
+      builder: (context, state, child) {
+        switch (state) {
+          case NoProfilesViewState():
+            return const SideBannerImageWidget();
+
+          default:
+            return Padding(
+              padding: const EdgeInsets.only(top: 30, bottom: 30, left: 20),
+              child: Column(children: [
+                LogoWidget(size: Size(80, 80)),
+                verticalSpaceLarge,
+                ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(100),
+                        topRight: Radius.circular(100),
+                        bottomRight: Radius.circular(100),
+                        bottomLeft: Radius.circular(10)),
+                    child: viewModel.profile.picture.isEmpty
+                        ? Image.asset(
+                            'assets/logo/logo_dark.png',
+                            height: 120,
+                            width: 120,
+                            fit: BoxFit.fitWidth,
+                          )
+                        : Image.network(
+                            viewModel.profile.picture,
+                            height: 120,
+                            width: 120,
+                            fit: BoxFit.cover,
+                          )),
+                verticalSpaceMedium,
+                buildTitleAndRoleWidget(context, viewModel)
+              ]),
+            );
+        }
+      },
+    );
+  }
+
+  Column buildTitleAndRoleWidget(
+      BuildContext context, MyProfileViewModel viewModel) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (viewModel.profile.fullName.isNotEmpty)
+          Text(
+            viewModel.profile.fullName,
+            textAlign: TextAlign.center,
+            style: Theme.of(context)
+                .primaryTextTheme
+                .titleLarge
+                ?.copyWith(color: viewModel.appTheme.accentColor, fontSize: 25),
+          ),
+        Text(
+          '@${viewModel.user.userName}',
+          textAlign: TextAlign.justify,
+          // overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+              color: viewModel.appTheme.primaryTextColor?.withOpacity(0.9),
+              fontSize: 13,
+              fontWeight: FontWeight.w600),
+        ),
+        verticalSpaceSmall,
+        Container(
+          height: 3,
+          width: 80,
+          decoration: BoxDecoration(
+              color: Colors.black87, borderRadius: BorderRadius.circular(10)),
+        ),
+        verticalSpaceMedium,
+        if (viewModel.profile.bio.isNotEmpty)
+          Text(
+            viewModel.profile.bio,
+            textAlign: TextAlign.justify,
+            // overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).primaryTextTheme.titleSmall?.copyWith(
+                color: viewModel.appTheme.primaryTextColor, fontSize: 13),
+          ),
+        verticalSpaceLarge,
+        _buildStatsWidget(viewModel)
+      ],
+    );
+  }
+
+  Widget _buildStatsWidget(MyProfileViewModel viewModel) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Expanded(
+          child: _buildStatsItem(
+              'Visits',
+              viewModel.user.totalVisitCounts,
+              FontAwesomeIcons.peopleGroup,
+              viewModel.appTheme.primaryBackgroundColor,
+              viewModel.appTheme.primaryTextColor),
+        ),
+        horizontalSpaceMedium,
+        Expanded(
+          child: _buildStatsItem(
+              'Saved',
+              32000.toImperial(),
+              FontAwesomeIcons.solidAddressCard,
+              viewModel.appTheme.primaryBackgroundColor,
+              viewModel.appTheme.primaryTextColor),
+        )
+      ],
+    );
+  }
+
+  Widget _buildStatsItem(
+    String label,
+    String value,
+    IconData icon,
+    Color? color,
+    Color? textColor,
+  ) {
+    final style = GoogleFonts.robotoFlex();
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FaIcon(
+                  icon,
+                  size: 15,
+                  color: textColor,
+                ),
+                horizontalSpaceTiny,
+                Text(
+                  value,
+                  style: style.copyWith(
+                      color: textColor,
+                      fontSize: 38,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+             Text(
+              label,
+              style:   TextStyle(fontSize: 11, color: textColor),
+            )
+          ]),
     );
   }
 }

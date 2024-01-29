@@ -14,9 +14,7 @@ class SubscriptionMobile extends ViewModelWidget<SubscriptionModel> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Center(
-
-          ),
+          child: Center(),
         ),
       ),
     );

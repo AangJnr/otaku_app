@@ -39,7 +39,7 @@ class TermsAndPolicyDesktop extends ViewModelWidget<TermsAndPolicyModel> {
                       profile: viewModel.profile,
                       appTheme: viewModel.appTheme,
                     ),
-                    verticalSpaceMedium,
+                    verticalSpaceSmall,
                     Expanded(
                       child: Container(
                         padding: const EdgeInsets.all(30),

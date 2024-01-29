@@ -1,4 +1,5 @@
 import 'package:otaku_katarougu_app/app/app.locator.dart';
+import 'package:otaku_katarougu_app/app/app.logger.dart';
 import 'package:otaku_katarougu_app/app/services/social_auth_service.dart';
 import 'package:otaku_katarougu_app/domain/repository/auth_repository.dart';
 import 'package:otaku_katarougu_app/ui/views/base/view_state.dart';
@@ -50,8 +51,10 @@ class LoginAlertDialogModel extends ViewModel<BaseViewState> {
       viewState = IdleViewState();
       screenManager.goToMyProfileScreen();
     }, (error) {
+      locator<SocialAuthService>().logout();
       setError(error);
       showErrorDialog(title: "Sign in failed", description: modelError);
+      getLogger('LoginAlertDialogModel').e(modelError);
     });
   }
 }

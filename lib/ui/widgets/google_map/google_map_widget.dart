@@ -1,11 +1,11 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'google_map_viewmodel.dart';
 
 class AGoogleMap extends StackedView<MapViewModel> {
-  const AGoogleMap({  Key? key}) : super(key: key);
-   @override
+  const AGoogleMap({Key? key}) : super(key: key);
+  @override
   Widget builder(BuildContext context, MapViewModel viewModel, Widget? child) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
@@ -30,7 +30,7 @@ class AGoogleMap extends StackedView<MapViewModel> {
 
   @override
   void onViewModelReady(MapViewModel viewModel) {
-     super.onViewModelReady(viewModel);
+    super.onViewModelReady(viewModel);
   }
 
   @override

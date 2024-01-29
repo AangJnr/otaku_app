@@ -64,7 +64,7 @@ class SubscriptionAlertDialog
               fontSize: 30),
         ),
         verticalSpaceLarge,
-       const LoadingWidget(),
+        const LoadingWidget(),
         verticalSpaceLarge
       ],
     );
@@ -140,14 +140,42 @@ class SubscriptionAlertDialog
               .toList(),
         ),
         verticalSpaceMedium,
-        LabeledFormField(
-          hint: 'Enter email',
-          label: "Please enter your email to subscribe",
-          accentColor: Colors.black87,
-          onChanged: viewModel.updateEmail,
-          initialValue: viewModel.email,
-        ),
-        verticalSpaceMedium,
+        FutureBuilder(
+            future: viewModel.socialAuthService.isSignedIn(),
+            builder: (ctx, snapshot) {
+              if (snapshot.data ?? false) {
+                return RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: 'You are already signed in as ',
+                        style: TextStyle(fontSize: 16, color: kcMediumGrey),
+                      ),
+                      TextSpan(
+                        text: viewModel.user.email,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: viewModel.appTheme.secondaryTextColor),
+                      ),
+                      const TextSpan(
+                        text: " do you want to subscribe?",
+                        style: TextStyle(fontSize: 16, color: kcMediumGrey),
+                      ),
+                    ],
+                  ),
+                );
+              }
+              return LabeledFormField(
+                hint: 'Enter email',
+                label: "Please enter your email to subscribe",
+                accentColor: Colors.black87,
+                onChanged: viewModel.updateEmail,
+                initialValue: viewModel.email,
+              );
+            }),
+        verticalSpaceLarge,
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,

@@ -26,7 +26,7 @@ class WorkView extends StackedView<WorkViewModel> {
 
   @override
   void onViewModelReady(WorkViewModel viewModel) {
-    viewModel.init(profile: profile);
+    viewModel.init();
     super.onViewModelReady(viewModel);
   }
 

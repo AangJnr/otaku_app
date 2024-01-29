@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
- import 'package:otaku_katarougu_app/domain/model/dialog_data.dart';
+import 'package:otaku_katarougu_app/domain/model/dialog_data.dart';
 import 'package:otaku_katarougu_app/ui/common/app_colors.dart';
 import 'package:otaku_katarougu_app/ui/common/ui_helpers.dart';
 import 'package:otaku_katarougu_app/ui/widgets/back_drop_filter_widget.dart';
@@ -8,7 +8,6 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'alert_dialog_model.dart';
 
- 
 class AlertDialog extends StackedView<AlertDialogModel> {
   final DialogRequest request;
   final Function(DialogResponse) completer;
@@ -25,7 +24,7 @@ class AlertDialog extends StackedView<AlertDialogModel> {
     AlertDialogModel viewModel,
     Widget? child,
   ) {
-    final data = request.data! as DialogData;
+    //final data = request.data as DialogData?;
     return BlurView(
       child: Container(
           alignment: Alignment.center,
@@ -44,7 +43,7 @@ class AlertDialog extends StackedView<AlertDialogModel> {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Oops! Somethig happened :(',
+                      text: request.title?? 'Oops! Somethig happened :(',
                       style: Theme.of(context)
                           .primaryTextTheme
                           .titleMedium
@@ -55,7 +54,7 @@ class AlertDialog extends StackedView<AlertDialogModel> {
                               fontSize: 30),
                     ),
                     TextSpan(
-                      text: data.message,
+                      text: request.description,
                       style: Theme.of(context)
                           .primaryTextTheme
                           .titleMedium
@@ -69,14 +68,6 @@ class AlertDialog extends StackedView<AlertDialogModel> {
                   ],
                 ),
               ),
-              verticalSpaceTiny,
-              const Text(
-                "Get access to features such as:",
-                style: TextStyle(fontSize: 14, color: kcMediumGrey),
-                maxLines: 3,
-                softWrap: true,
-              ),
-              verticalSpaceSmall,
               verticalSpaceMedium,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,

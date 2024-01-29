@@ -44,20 +44,17 @@ extension HoverExtensions on Widget {
 }
 
 extension StringToColor on String? {
-
-  Color hexToColor( ) {
+  Color hexToColor() {
     if (this?.isEmpty == true) return const Color(0xFFE1E1E1);
     return Color(int.parse(this!.substring(1, 7), radix: 16) + 0xFF000000);
   }
 }
 
 extension DaysToYearConverter on int {
-
-  String toYear( ) {
+  String toYear() {
     return "/year";
-    if (this == 0 ) return 'N/a';
-    final value = this~/365 + (this % 365);
-    return value> 1 ? "/ $value years" : "/ $value year";
+    if (this == 0) return 'N/a';
+    final value = this ~/ 365 + (this % 365);
+    return value > 1 ? "/ $value years" : "/ $value year";
   }
 }
-

@@ -43,7 +43,7 @@ class CircleIconButtonWidget extends StatelessWidget {
             assetUrl!,
             height: 30,
             width: 30,
-            color: textColor,
+            // color: textColor,
           ),
         // if (!!kIsWeb) ...[
         //   const SizedBox(

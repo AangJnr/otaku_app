@@ -8,7 +8,7 @@ class LogoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-     isLight? 'assets/logo/logo_dark.png': 'assets/logo/logo_white.png',
+      isLight ? 'assets/logo/logo_dark.png' : 'assets/logo/logo_white.png',
       height: size.height,
       width: size.width,
     );

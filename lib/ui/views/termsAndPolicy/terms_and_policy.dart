@@ -33,6 +33,6 @@ class TermsAndPolicyView extends StackedView<TermsAndPolicyModel> {
   @override
   void onViewModelReady(TermsAndPolicyModel viewModel) {
     super.onViewModelReady(viewModel);
-  viewModel.init();
+    viewModel.init();
   }
 }

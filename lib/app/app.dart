@@ -31,7 +31,10 @@ import 'services/toast_service.dart';
   logger: StackedLogger(),
   routes: [
     CustomRoute(page: StartupView, initial: true),
-    CustomRoute(page: PublicProfileView, path: '/public-profile'),
+    CustomRoute(
+      page: PublicProfileView,
+      path: '/public-profile',
+    ),
     CustomRoute(page: MyProfileView, path: '/me'),
     CustomRoute(page: WorkView, path: '/relevant-experience'),
     CustomRoute(page: SubscriptionView, path: '/subscribe'),

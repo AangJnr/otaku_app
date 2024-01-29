@@ -4,22 +4,22 @@ import 'package:stacked/stacked.dart';
 import 'subscription.desktop.dart';
 import 'subscription.mobile.dart';
 import 'subscription_model.dart';
-enum Terms{terms, policy}
+
+enum Terms { terms, policy }
 
 class SubscriptionView extends StackedView<SubscriptionModel> {
-   const SubscriptionView({super.key});
+  const SubscriptionView({super.key});
 
   @override
   Widget builder(
     BuildContext context,
-      SubscriptionModel viewModel,
+    SubscriptionModel viewModel,
     Widget? child,
   ) {
     return ScreenTypeLayout.builder(
       mobile: (_) => const SubscriptionMobile(),
-       desktop: (_) => const SubscriptionDesktop(),
+      desktop: (_) => const SubscriptionDesktop(),
       tablet: (_) => const SubscriptionDesktop(),
-
     );
   }
 

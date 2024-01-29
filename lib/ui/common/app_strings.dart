@@ -37,8 +37,6 @@ const String termsAndConditions = '''
 <p>If you have any questions or concerns about these Terms, please contact us at [Email Address].</p>
 ''';
 
-
-
 const String privacyPolicy = '''
 <h1>Otaku Tec Privacy Policy</h1>
 <p><strong>Effective Date:</strong> [Date]</p>
@@ -79,4 +77,3 @@ const String privacyPolicy = '''
 <h2>8. Contact Information</h2>
 <p>If you have any questions or concerns about this Privacy Policy, please contact us at [Email Address].</p>
 ''';
-

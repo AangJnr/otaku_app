@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
- import 'package:intl/intl.dart';
-
+import 'package:intl/intl.dart';
 
 class Utils {
   static Size size(BuildContext context) {
@@ -9,20 +8,19 @@ class Utils {
   }
 
   static void setStatusBarColor(BuildContext context, {bool isLight = true}) {
-    SystemChrome.setSystemUIOverlayStyle(
-      isLight
-          ? SystemUiOverlayStyle.light.copyWith(
-              statusBarColor: Colors.transparent,
-             // systemNavigationBarColor: AppColors.whiteColor)
-      ) : SystemUiOverlayStyle.dark.copyWith(
-              statusBarColor: Colors.transparent,
-             // systemNavigationBarColor: AppColors.whiteColor),
-        )
-    );
+    SystemChrome.setSystemUIOverlayStyle(isLight
+        ? SystemUiOverlayStyle.light.copyWith(
+            statusBarColor: Colors.transparent,
+            // systemNavigationBarColor: AppColors.whiteColor)
+          )
+        : SystemUiOverlayStyle.dark.copyWith(
+            statusBarColor: Colors.transparent,
+            // systemNavigationBarColor: AppColors.whiteColor),
+          ));
   }
 
   static bool isColorLight(Color? color) {
-    if(color == null) return true;
+    if (color == null) return true;
     // Calculate the perceived brightness of the color using the formula:
     // 0.299 * Red + 0.587 * Green + 0.114 * Blue
     final brightness = color.computeLuminance();
@@ -46,7 +44,7 @@ class Utils {
 
   static getAcronym(String? name) {
     //if (name?.isEmpty == true)
-     return "";
+    return "";
     List<String> letters = name!.split(" ");
     if (letters.length == 1) {
       return letters[0][0];

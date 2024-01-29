@@ -16,7 +16,7 @@ class FooterViewModel extends ViewModel<BaseViewState> {
 
   @override
   void init({String? key, Profile? profile}) async {
-    super.init(key: key, profile: profile);
+    super.init();
     _policyRecognizer.onTap = () {
       screenManager.goToPrivacyPolicyScreen();
     };

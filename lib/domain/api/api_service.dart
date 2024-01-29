@@ -7,7 +7,7 @@ import '../model/upload_photo_request.dart';
 abstract class ApiService {
   Future<Response> createUser(SubscriptionRequest subscriptionRequest);
   Future<Response> getPublicProfile(String uid);
-    Future<Response> getMyProfiles();
+  Future<Response> getMyProfiles();
   Future<Response> editProfile(String uid, Profile profile);
   Future<Response> uploadPhoto(UploadPhotoRequest request);
   Future<Response> subscribe(SubscriptionRequest subscriptionRequest);
@@ -17,4 +17,5 @@ abstract class ApiService {
   Future<Response> signInWithGoogle(String idToken);
   Future<Response> verifyEmail(String token);
   Future<Response> logout();
+  Future<Response> getUser();
 }

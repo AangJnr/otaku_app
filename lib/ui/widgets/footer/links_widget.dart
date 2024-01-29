@@ -29,7 +29,7 @@ class Linkswidget extends StackedView<FooterViewModel> {
                   .displayMedium
                   ?.copyWith(fontSize: 13, color: theme.primaryTextColor),
             ),
-           const  Spacer(),
+            const Spacer(),
             RichText(
               textAlign: TextAlign.center,
               text: TextSpan(

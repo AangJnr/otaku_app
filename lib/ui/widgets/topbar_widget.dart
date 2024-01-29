@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:otaku_katarougu_app/app/app.locator.dart';
 import 'package:otaku_katarougu_app/app/services/screen_manager.dart';
+import 'package:otaku_katarougu_app/app/services/social_auth_service.dart';
+import 'package:otaku_katarougu_app/domain/repository/auth_repository.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../app/app.dialogs.dart';
 import '../../config/theme_setup.dart';
 import '../../domain/model/profile/profile.dart';
 import 'material_inkwell.dart';
+import 'profile_avatar/profile_me_widget.dart';
 
 enum HeaderItem { profile, work }
 
@@ -19,7 +22,7 @@ class TopbarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appTheme = this.appTheme ?? DefaultTheme();
+    final appTheme = this.appTheme ?? SilverTheme();
     final headerTextStyle = Theme.of(context)
         .primaryTextTheme
         .titleSmall
@@ -29,26 +32,44 @@ class TopbarWidget extends StatelessWidget {
             fontWeight: FontWeight.w700);
     return Row(
       children: [
-        if (profile != null)
+        if (profile != null) ...[
           buildHeaderItem('PROFILE',
               onTap: () => locator<ScreenManagerService>()
-                  .goToPublicProfileScreen(profile),
+                  .goToPublicProfileScreen(profile, key: profile?.uid),
               style: headerTextStyle,
               isSelected: 'PROFILE' == label),
-        buildHeaderItem('WORK',
-            onTap: () => locator<ScreenManagerService>()
-                .goToPublicWorkAndExperiecesScreen(profile),
-            style: headerTextStyle,
-            isSelected: 'WORK' == label),
+          buildHeaderItem('WORK',
+              onTap: () => locator<ScreenManagerService>()
+                  .goToPublicWorkAndExperiecesScreen(profile),
+              style: headerTextStyle,
+              isSelected: 'WORK' == label),
+        ],
         const Spacer(),
         buildHeaderItem('Get a card',
             onTap: () =>
                 locator<ScreenManagerService>().goToSubscriptionScreen(),
             style: headerTextStyle),
-        buildHeaderItem('Login', onTap: () async {
-          locator<DialogService>()
-              .showCustomDialog(variant: DialogType.loginAlert);
-        }, style: headerTextStyle),
+        FutureBuilder(
+            future: locator<SocialAuthService>().isSignedIn(),
+            builder: (ctx, snapshot) {
+              if (snapshot.data ?? false) {
+                return Row(
+                  children: [
+                    buildHeaderItem('Logout', onTap: () async {
+                      await locator<SocialAuthService>().logout();
+                      await locator<AuthRepository>().logout();
+                      locator<ScreenManagerService>()
+                          .goToSubscriptionScreen(shouldReplace: true);
+                    }, style: headerTextStyle),
+                    const ProfileMeWidget(),
+                  ],
+                );
+              }
+              return buildHeaderItem('Login', onTap: () async {
+                locator<DialogService>()
+                    .showCustomDialog(variant: DialogType.loginAlert);
+              }, style: headerTextStyle);
+            }),
       ],
     );
   }

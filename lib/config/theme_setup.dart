@@ -15,11 +15,11 @@ ThemeData getTheme(BuildContext context) {
           fontWeight: FontWeight.w700,
           height: 0.9),
       titleMedium: textStyle.copyWith(
-        fontSize: getResponsiveExtraLargeFontSize(context),
+        fontSize: getResponsiveLargeFontSize(context),
         fontWeight: FontWeight.w700,
       ),
       titleSmall: textStyle.copyWith(
-        fontSize: getResponsiveMediumFontSize(context),
+        fontSize: getResponsiveSmallFontSize(context),
         fontWeight: FontWeight.w700,
       ),
       displayLarge: textStyle.copyWith(
@@ -43,7 +43,7 @@ ThemeData getTheme(BuildContext context) {
   );
 }
 
-class DefaultTheme implements AppTheme {
+class SilverTheme implements AppTheme {
   @override
   Color? primaryBackgroundColor = const Color(0xFFEFEFEF);
 
@@ -69,9 +69,7 @@ class DefaultTheme implements AppTheme {
   Color? tertiaryTextColor = const Color(0xFFdbdbdb);
 }
 
-
 class GoldTheme implements AppTheme {
-
 // {
 // 		"primaryBackgroundColor": "#F5F2EF",
 // 		"secondaryBackgroundColor": "#FFFFFF",
@@ -108,12 +106,12 @@ class GoldTheme implements AppTheme {
 
 class BlackTheme implements AppTheme {
   //"primaryBackgroundColor": "#D5D9DD",
-	//	"secondaryBackgroundColor": "#A3A6A9",
-	//	"primaryTextColor": "#050505",
-		//"accent": "#23262A",
-	//	"secondaryTextColor": "#151515",
-	//	"tertiaryTextColor": "#D7D7D7",
-	//	"panelBackgroundColor": "#A3A6A9"
+  //	"secondaryBackgroundColor": "#A3A6A9",
+  //	"primaryTextColor": "#050505",
+  //"accent": "#23262A",
+  //	"secondaryTextColor": "#151515",
+  //	"tertiaryTextColor": "#D7D7D7",
+  //	"panelBackgroundColor": "#A3A6A9"
   @override
   Color? primaryBackgroundColor = const Color(0xFFD5D9DD);
 

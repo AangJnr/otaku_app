@@ -515,7 +515,7 @@ extension RouterStateExtension on _i8.RouterService {
   Future<dynamic> replaceWithTermsView(
       {void Function(_i9.NavigationFailure)? onFailure}) async {
     return replaceWith(
-      const TermsViewRoute(),
+      const PolicyViewRoute(),
       onFailure: onFailure,
     );
   }

@@ -8,7 +8,7 @@ class AThemeResponse {
   final String? primaryTextColor;
   final String? secondaryTextColor;
   final String? tertiaryTextColor;
-  final String?  panelBackgroundColor;
+  final String? panelBackgroundColor;
 
   const AThemeResponse(
       {this.accent,
@@ -16,7 +16,8 @@ class AThemeResponse {
       this.secondaryTextColor,
       this.tertiaryTextColor,
       this.primaryBackgroundColor,
-      this.secondaryBackgroundColor,this.panelBackgroundColor,
+      this.secondaryBackgroundColor,
+      this.panelBackgroundColor,
       this.tertiaryBackgroundColor});
 
   @override
@@ -25,15 +26,14 @@ class AThemeResponse {
   }
 
   factory AThemeResponse.fromMap(Map<String, dynamic> data) => AThemeResponse(
-        accent: data['accent'] as String?,
-        primaryTextColor: data['primaryTextColor'] as String?,
-        secondaryTextColor: data['secondaryTextColor'] as String?,
-        tertiaryTextColor: data['tertiaryTextColor'] as String?,
-        primaryBackgroundColor: data['primaryBackgroundColor'] as String?,
-        secondaryBackgroundColor: data['secondaryBackgroundColor'] as String?,
-        tertiaryBackgroundColor: data['tertiaryBackgroundColor'] as String?,
-      panelBackgroundColor:data['panelBackgroundColor'] as String?
-      );
+      accent: data['accent'] as String?,
+      primaryTextColor: data['primaryTextColor'] as String?,
+      secondaryTextColor: data['secondaryTextColor'] as String?,
+      tertiaryTextColor: data['tertiaryTextColor'] as String?,
+      primaryBackgroundColor: data['primaryBackgroundColor'] as String?,
+      secondaryBackgroundColor: data['secondaryBackgroundColor'] as String?,
+      tertiaryBackgroundColor: data['tertiaryBackgroundColor'] as String?,
+      panelBackgroundColor: data['panelBackgroundColor'] as String?);
 
   Map<String, dynamic> toMap() => {
         'accent': accent,
@@ -43,7 +43,7 @@ class AThemeResponse {
         'primaryBackgroundColor': primaryBackgroundColor,
         'secondaryBackgroundColor': secondaryBackgroundColor,
         'tertiaryBackgroundColor': tertiaryBackgroundColor,
-    'panelBackgroundColor':panelBackgroundColor,
+        'panelBackgroundColor': panelBackgroundColor,
       };
 
   /// `dart:convert`
@@ -67,19 +67,21 @@ class AThemeResponse {
     String? tertiaryTextColor,
     String? primaryBackgroundColor,
     String? secondaryBackgroundColor,
-    String? tertiaryBackgroundColor,String? panelBackgroundColor,
+    String? tertiaryBackgroundColor,
+    String? panelBackgroundColor,
   }) {
     return AThemeResponse(
-      accent: accent ?? this.accent,
-      primaryTextColor: primaryTextColor ?? this.primaryTextColor,
-      secondaryTextColor: secondaryTextColor ?? this.secondaryTextColor,
-      tertiaryTextColor: tertiaryTextColor ?? this.tertiaryTextColor,
-      primaryBackgroundColor:
-          primaryBackgroundColor ?? this.primaryBackgroundColor,
-      secondaryBackgroundColor:
-          secondaryBackgroundColor ?? this.secondaryBackgroundColor,
-      tertiaryBackgroundColor:
-          tertiaryBackgroundColor ?? this.tertiaryBackgroundColor, panelBackgroundColor:panelBackgroundColor??this.panelBackgroundColor
-    );
+        accent: accent ?? this.accent,
+        primaryTextColor: primaryTextColor ?? this.primaryTextColor,
+        secondaryTextColor: secondaryTextColor ?? this.secondaryTextColor,
+        tertiaryTextColor: tertiaryTextColor ?? this.tertiaryTextColor,
+        primaryBackgroundColor:
+            primaryBackgroundColor ?? this.primaryBackgroundColor,
+        secondaryBackgroundColor:
+            secondaryBackgroundColor ?? this.secondaryBackgroundColor,
+        tertiaryBackgroundColor:
+            tertiaryBackgroundColor ?? this.tertiaryBackgroundColor,
+        panelBackgroundColor:
+            panelBackgroundColor ?? this.panelBackgroundColor);
   }
 }

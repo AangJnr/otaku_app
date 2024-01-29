@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class MaterialInkWell extends StatelessWidget {
   final VoidCallback? onTap;
   final Widget? child;
-  final Color? color;  final Color? splashColor;
+  final Color? color;
+  final Color? splashColor;
 
   final Color? shadowColor;
   final double paddingValue;
@@ -18,8 +19,7 @@ class MaterialInkWell extends StatelessWidget {
       this.paddingValue = 0,
       this.radiusValue = 0.0,
       this.color = Colors.transparent,
-        this.splashColor = Colors.transparent,
-
+      this.splashColor = Colors.transparent,
       this.shadowColor = Colors.black38,
       Key? key})
       : super(key: key);
