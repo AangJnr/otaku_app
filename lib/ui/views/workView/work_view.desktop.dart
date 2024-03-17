@@ -2,6 +2,7 @@ import 'package:otaku_katarougu_app/ui/common/app_constants.dart';
 import 'package:otaku_katarougu_app/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import '../../widgets/banner/banner_widget.dart';
 import '../../widgets/material_inkwell.dart';
 import '../../widgets/topbar_widget.dart';
 import 'work_viewmodel.dart';
@@ -23,23 +24,9 @@ class WorkViewDesktop extends ViewModelWidget<WorkViewModel> {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Expanded(
+              const Expanded(
                 flex: 2,
-                child: Material(
-                  shadowColor: Colors.black26,
-                  elevation: 0,
-                  color: Colors.transparent,
-                  child: SizedBox(
-                    height: double.infinity,
-                    width: double.infinity,
-                    child: viewModel.hasImage
-                        ? Image.asset(
-                            viewModel.bannerImage,
-                            fit: BoxFit.contain,
-                          )
-                        : const SizedBox.shrink(),
-                  ),
-                ),
+                child: SideBannerImageWidget(),
               ),
               horizontalSpaceLarge,
               Expanded(

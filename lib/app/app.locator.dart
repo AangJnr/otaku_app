@@ -13,11 +13,15 @@ import 'package:stacked_shared/stacked_shared.dart';
 
 import '../data/local/session_manager_service.dart';
 import '../data/remote/api_service_impl.dart';
+import '../data/remote/repository/auth_repository_impl.dart';
 import '../data/remote/repository/user_repository_impl.dart';
 import '../domain/api/api_service.dart';
 import '../domain/model/session_manager.dart';
+import '../domain/repository/auth_repository.dart';
 import '../domain/repository/user_repository.dart';
 import 'services/location_service.dart';
+import 'services/screen_manager.dart';
+import 'services/social_auth_service.dart';
 import 'services/toast_service.dart';
 import 'app.router.dart';
 
@@ -39,8 +43,13 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => ToastService());
   locator.registerLazySingleton(() => LocationService());
   locator.registerLazySingleton<UserRepository>(() => UserRepositoryImpl());
+  locator.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl());
+  locator
+      .registerLazySingleton<SocialAuthService>(() => SocialAuthServiceImpl());
   locator.registerLazySingleton<SessionManager>(() => SessionManagerImpl());
   locator.registerLazySingleton<ApiService>(() => ApiServiceImpl());
+  locator.registerLazySingleton<ScreenManagerService>(
+      () => ScreenManagerServiceImpl());
   if (stackedRouter == null) {
     throw Exception(
         'Stacked is building to use the Router (Navigator 2.0) navigation but no stackedRouter is supplied. Pass the stackedRouter to the setupLocator function in main.dart');

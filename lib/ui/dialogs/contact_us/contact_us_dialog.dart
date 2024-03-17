@@ -40,7 +40,7 @@ class ContactUsDialog extends StackedView<ContactUsDialogModel> {
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30), color: Colors.white),
-        child:  _buildSubscriptionWidget(context, viewModel, category),
+        child: _buildSubscriptionWidget(context, viewModel, category),
       ),
     );
   }
@@ -48,7 +48,6 @@ class ContactUsDialog extends StackedView<ContactUsDialogModel> {
   @override
   ContactUsDialogModel viewModelBuilder(BuildContext context) =>
       ContactUsDialogModel();
-
 
   Widget _buildSubscriptionWidget(
       BuildContext context, ContactUsDialogModel viewModel, Category category) {
@@ -109,7 +108,8 @@ class ContactUsDialog extends StackedView<ContactUsDialogModel> {
                           .titleSmall
                           ?.copyWith(
                             fontWeight: FontWeight.w900,
-                            height: 1.4, fontSize: 15,
+                            height: 1.4,
+                            fontSize: 15,
                             color: Colors.black87,
                           ),
                     )

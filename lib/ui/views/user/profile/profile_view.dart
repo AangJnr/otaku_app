@@ -2,37 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../domain/model/profile/profile.dart';
+import '../../../../domain/model/profile/profile.dart';
 import 'profile_view.desktop.dart';
 import 'profile_view.mobile.dart';
 import 'profile_viewmodel.dart';
 
-class ProfileView extends StackedView<ProfileViewModel> {
+class MyProfileView extends StackedView<MyProfileViewModel> {
   final Profile? profile;
-  const ProfileView({this.profile, super.key});
+  const MyProfileView({this.profile, super.key});
 
   @override
   Widget builder(
     BuildContext context,
-    ProfileViewModel viewModel,
+    MyProfileViewModel viewModel,
     Widget? child,
   ) {
     return ScreenTypeLayout.builder(
-      mobile: (_) => const ProfileViewMobile(),
-      tablet: (_) => const ProfileViewDesktop(),
-      desktop: (_) => const ProfileViewDesktop(),
+      mobile: (_) => const MyProfileViewMobile(),
+      tablet: (_) => const MyProfileViewDesktop(),
+      desktop: (_) => const MyProfileViewDesktop(),
     );
   }
 
   @override
-  void onViewModelReady(ProfileViewModel viewModel) {
+  void onViewModelReady(MyProfileViewModel viewModel) {
     viewModel.init(profile: profile);
     super.onViewModelReady(viewModel);
   }
 
   @override
-  ProfileViewModel viewModelBuilder(
+  MyProfileViewModel viewModelBuilder(
     BuildContext context,
   ) =>
-      ProfileViewModel();
+      MyProfileViewModel();
 }

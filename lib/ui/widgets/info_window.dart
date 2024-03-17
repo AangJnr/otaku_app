@@ -12,7 +12,8 @@ class InfoWindow extends StatelessWidget {
       this.negativeAction,
       this.negativeText = "Cancel",
       this.buttonColor,
-      this.child,this.title1,
+      this.child,
+      this.title1,
       this.title2,
       this.message});
 
@@ -48,7 +49,7 @@ class InfoWindow extends StatelessWidget {
                     fontSize: 30),
               ),
               TextSpan(
-                text: title2,
+                text: " $title2",
                 style: Theme.of(context).primaryTextTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w900,
                       height: 1.4,
@@ -75,22 +76,21 @@ class InfoWindow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            if(negativeAction!=null)
-            PrimaryButtonWidget(
-              negativeText!,
-              onTap: negativeAction,
-              showText: true,
-              color: Colors.red[400],
-            ),
+            if (negativeAction != null)
+              PrimaryButtonWidget(
+                negativeText!,
+                onTap: negativeAction,
+                showText: true,
+                color: Colors.red[400],
+              ),
             horizontalSpaceMedium,
-                        if (positiveAction != null)
-
-            PrimaryButtonWidget(
-              positiveText!,
-              onTap: positiveAction,
-              showText: true,
-              color: buttonColor,
-            ),
+            if (positiveAction != null)
+              PrimaryButtonWidget(
+                positiveText!,
+                onTap: positiveAction,
+                showText: true,
+                color: buttonColor,
+              ),
           ],
         ),
         if (child != null) ...[verticalSpaceMedium, child!]

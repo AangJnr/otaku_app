@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import '../../../app/app.locator.dart';
@@ -125,39 +126,37 @@ class ApiServiceImpl implements ApiService {
     return request.send();
   }
 
-  // @override
-  // Future<http.Response> getUser(String uid) {
-  //   var response = get(
-  //     User().Profile(uid),
-  //     headers: getHeaders(isSecure: false),
-  //   );
-  //   return response;
-  // }
+  @override
+  Future<http.Response> getPublicProfile(String uid) {
+    var response = get(UserRoute().PublicProfile(uid),
+        headers: getHeaders(isSecure: false));
+    return response;
+  }
 
   @override
-  Future<http.Response> getProfile(String uid) {
+  Future<http.Response> getMyProfiles() {
     var response =
-        get(User().Profile(uid), headers: getHeaders(isSecure: false));
+        get(UserRoute().MyProfiles, headers: getHeaders(isSecure: true));
     return response;
   }
 
   @override
   Future<http.Response> editProfile(String uid, Profile profile) {
-    var response = patch(User().Profile(uid),
+    var response = patch(UserRoute().Profile(uid),
         headers: getHeaders(isSecure: true), body: profile.mapToApi().toJson());
     return response;
   }
 
   @override
   Future<http.Response> uploadPhoto(UploadPhotoRequest request) {
-    var response = post(User().UploadPhoto,
+    var response = post(UserRoute().UploadPhoto,
         headers: getHeaders(isSecure: true), body: request.toJson());
     return response;
   }
 
   @override
   Future<http.Response> subscribe(SubscriptionRequest subscriptionRequest) {
-    var response = post(User().Subscribe,
+    var response = post(UserRoute().Subscribe,
         headers: getHeaders(isSecure: true),
         body: subscriptionRequest.toRequest());
     return response;
@@ -174,7 +173,7 @@ class ApiServiceImpl implements ApiService {
 
   @override
   Future<http.Response> createUser(SubscriptionRequest subscriptionRequest) {
-    var response = post(Auth().SignUp,
+    var response = post(UserRoute().SignUp,
         headers: getHeaders(isSecure: false),
         body: subscriptionRequest.toRequest());
     return response;
@@ -182,15 +181,45 @@ class ApiServiceImpl implements ApiService {
 
   @override
   Future<http.Response> activeSubscription() {
-    var response =
-        get(User().ActiveSubscription, headers: getHeaders(isSecure: true));
+    var response = get(UserRoute().ActiveSubscription,
+        headers: getHeaders(isSecure: true));
     return response;
   }
 
   @override
-  Future<http.Response> login(String email) {
-    var response =
-        get(Auth().login(email), headers: getHeaders(isSecure: false));
+  Future<http.Response> sendVerificationLink(String email) {
+    var response = get(Auth().sendEmailVerificationLink(email),
+        headers: getHeaders(isSecure: false));
+    return response;
+  }
+
+  @override
+  Future<http.Response> logout() {
+    var response = get(Auth().LogOut, headers: getHeaders(isSecure: true));
+    return response;
+  }
+
+  @override
+  Future<http.Response> verifyEmail(String token) {
+    var response = get(Auth().VerifyEmailUser(token),
+        headers: getHeaders(isSecure: false));
+    return response;
+  }
+
+  @override
+  Future<http.Response> signInWithGoogle(String idToken) {
+    var response = post(Auth().SignInWithGoogle,
+        headers: getHeaders(isSecure: false),
+        body: jsonEncode({"token": idToken}));
+    return response;
+  }
+
+  @override
+  Future<http.Response> getUser() {
+    var response = get(
+      UserRoute().Me,
+      headers: getHeaders(isSecure: true),
+    );
     return response;
   }
 }

@@ -14,9 +14,7 @@ class TermsAndPolicyMobile extends ViewModelWidget<TermsAndPolicyModel> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Center(
-
-          ),
+          child: Center(),
         ),
       ),
     );

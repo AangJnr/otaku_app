@@ -26,14 +26,16 @@ class LabeledFormField extends StatelessWidget {
   TextEditingController c = TextEditingController();
 
   LabeledFormField(
-      {Key? key, this.accentColor,
+      {Key? key,
+      this.accentColor,
       this.label = '',
       this.hint = "",
       this.isRequired = false,
       this.isDone = false,
       this.inputType = TextInputType.text,
       this.focusNode,
-      this.nextFocus, this.hasError =false,
+      this.nextFocus,
+      this.hasError = false,
       this.suffixIcon,
       this.showKeyboard = true,
       this.errorMessage,
@@ -67,7 +69,7 @@ class LabeledFormField extends StatelessWidget {
         focusNode: focusNode,
         showCursor: showKeyboard,
         cursorColor: accentColor,
-        style: textStyle?.copyWith(color:  Colors.black87, fontSize: 14),
+        style: textStyle?.copyWith(color: Colors.black87, fontSize: 14),
         obscureText: inputType == TextInputType.visiblePassword,
         onTap: () {
           onTapped?.call();
@@ -79,10 +81,10 @@ class LabeledFormField extends StatelessWidget {
         decoration: InputDecoration(
           errorMaxLines: 1,
           hintText: hint,
-          hintStyle:   textStyle?.copyWith(
-              color: Colors.grey[300],
-              fontSize: 13,
-            ),
+          hintStyle: textStyle?.copyWith(
+            color: Colors.grey[300],
+            fontSize: 13,
+          ),
           filled: true,
           fillColor: Colors.white,
           errorText: errorMsg,
@@ -93,9 +95,10 @@ class LabeledFormField extends StatelessWidget {
             child: Text.rich(
               TextSpan(
                 text: label,
-                style:    textStyle?.copyWith(
-                    color: accentColor,
-                    fontSize: 13, ),
+                style: textStyle?.copyWith(
+                  color: accentColor,
+                  fontSize: 13,
+                ),
                 children: [
                   if (isRequired)
                     TextSpan(
@@ -111,7 +114,7 @@ class LabeledFormField extends StatelessWidget {
               ),
             ),
           ),
-          errorStyle:  textStyle?.copyWith(
+          errorStyle: textStyle?.copyWith(
             color: Colors.red,
             fontSize: 10,
           ),
@@ -123,12 +126,14 @@ class LabeledFormField extends StatelessWidget {
               borderSide: const BorderSide(width: 1.5, color: Colors.red)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide:   BorderSide(width: 1, color: accentColor ?? Colors.black87)),
+              borderSide:
+                  BorderSide(width: 1, color: accentColor ?? Colors.black87)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                   width: 1.5,
-                  color: hasError ? Colors.red : accentColor ?? Colors.black87)),
+                  color:
+                      hasError ? Colors.red : accentColor ?? Colors.black87)),
           suffixIcon:
               Padding(padding: const EdgeInsets.all(12.0), child: suffixIcon),
         ),

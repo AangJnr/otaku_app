@@ -1,15 +1,16 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:otaku_katarougu_app/data/model/user/a_user_response/a_user_response.dart';
 
 import '../../domain/model/session_manager.dart';
- import '../../ui/common/app_strings.dart';
+import '../../domain/model/user.dart';
+import '../../ui/common/app_strings.dart';
 
 const appStateKey = "appStateKey";
 const accessTokenKey = "accessTokenKey";
 
 const emailKey = "emailKey";
-const userProfileKey = "userProfileKey";
+const userKey = "userKey";
 const userPreferenceKey = "userPreferenceKey";
 
 enum AppState {
@@ -68,8 +69,19 @@ class SessionManagerImpl extends SessionManager {
   }
 
   @override
-  void setAppState(AppState state) {
-    _hiveBox.put(appStateKey, state.name);
+  void setAppState(AppState appState) {
+    _hiveBox.put(appStateKey, appState.name);
   }
 
+  @override
+  void setUser(User userProfile) {
+    _hiveBox.put(userKey, userProfile.mapToApi().toJson());
+  }
+
+  @override
+  User getUser() {
+    final data = _hiveBox.get(userKey);
+    if (data == null) return const User();
+    return AUserResponse.fromJson(data).mapToDomain();
+  }
 }

@@ -1,4 +1,4 @@
-import '../../views/viewmodel.dart';
+import '../../views/base/viewmodel.dart';
 
 class SocialButtonsViewModel extends ViewModel {
   bool _isVisible = false;

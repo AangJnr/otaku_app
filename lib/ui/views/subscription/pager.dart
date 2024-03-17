@@ -145,18 +145,20 @@ class CategoriesPagerWidget extends ViewModelWidget<SubscriptionModel> {
                                   size: 20,
                                 ),
                                 const SizedBox(width: 8),
-                                Text(
-                                  e,
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .titleSmall
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.w900,
-                                        height: 1.4,
-                                        fontSize: 13,
-                                        color: viewModel.categories[i].theme
-                                            ?.primaryTextColor,
-                                      ),
+                                Flexible(
+                                  child: Text(
+                                    e,
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .titleSmall
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.w900,
+                                          height: 1.4,
+                                          fontSize: 13,
+                                          color: viewModel.categories[i].theme
+                                              ?.primaryTextColor,
+                                        ),
+                                  ),
                                 )
                               ]),
                             ),

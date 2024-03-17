@@ -1,12 +1,8 @@
-import 'package:otaku_katarougu_app/app/app.locator.dart';
-import 'package:otaku_katarougu_app/ui/common/app_colors.dart';
 import 'package:otaku_katarougu_app/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:otaku_katarougu_app/ui/widgets/primary_button_widget.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
-import '../viewmodel.dart';
 import 'unknown_viewmodel.dart';
 
 class UnknownViewDesktop extends ViewModelWidget<UnknownViewModel> {
@@ -15,10 +11,7 @@ class UnknownViewDesktop extends ViewModelWidget<UnknownViewModel> {
   final PageRouteInfo? pageRoute;
 
   const UnknownViewDesktop(
-      {this.title,
-      this.pageRoute,
-      this.message ,
-      super.key});
+      {this.title, this.pageRoute, this.message, super.key});
 
   @override
   Widget build(BuildContext context, UnknownViewModel viewModel) {
@@ -40,7 +33,8 @@ class UnknownViewDesktop extends ViewModelWidget<UnknownViewModel> {
             ),
             verticalSpaceSmall,
             Text(
-              message!, textAlign: TextAlign.center,
+              message!,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: viewModel.appTheme.primaryTextColor?.withOpacity(0.7),
                 fontSize: 20,
@@ -51,9 +45,10 @@ class UnknownViewDesktop extends ViewModelWidget<UnknownViewModel> {
             verticalSpaceMedium,
             if (pageRoute != null)
               PrimaryButtonWidget(
-                "Refresh", color: viewModel.appTheme.accentColor,
+                "Refresh",
+                color: viewModel.appTheme.accentColor,
                 onTap: () {
-                  viewModel.routerService.replaceWith(pageRoute!);
+                  viewModel.screenManager.goTo(pageRoute!);
                 },
                 showText: true,
               )

@@ -84,7 +84,6 @@ class MapViewModel extends BaseViewModel {
     rebuildUi();
   }
 
-
   static LatLngBounds boundsFromLatLngList(List<LatLng> list) {
     double x0 = 0.0, x1 = 0.0, y0 = 0.0, y1 = 0.0;
     for (LatLng latLng in list) {

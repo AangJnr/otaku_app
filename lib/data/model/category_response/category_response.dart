@@ -62,7 +62,7 @@ class CategoryResponse implements DomainMapper<Category> {
         'cardType': cardType?.toMap(),
         'theme': theme?.toMap(),
         'durationInDays': durationInDays,
-    'imageUrl':imageUrl,
+        'imageUrl': imageUrl,
       };
 
   /// `dart:convert`
@@ -77,16 +77,16 @@ class CategoryResponse implements DomainMapper<Category> {
   /// Converts [CategoryResponse] to a JSON string.
   String toJson() => json.encode(toMap());
 
-  CategoryResponse copyWith({
-    String? uid,
-    String? name,
-    List<String>? features,
-    int? amount,
-    String? currency,
-    CardTypeResponse? cardType,
-    AThemeResponse? theme,
-    int? durationInDays, String? imageUrl
-  }) {
+  CategoryResponse copyWith(
+      {String? uid,
+      String? name,
+      List<String>? features,
+      int? amount,
+      String? currency,
+      CardTypeResponse? cardType,
+      AThemeResponse? theme,
+      int? durationInDays,
+      String? imageUrl}) {
     return CategoryResponse(
       uid: uid ?? this.uid,
       name: name ?? this.name,
@@ -94,7 +94,8 @@ class CategoryResponse implements DomainMapper<Category> {
       amount: amount ?? this.amount,
       currency: currency ?? this.currency,
       cardType: cardType ?? this.cardType,
-      theme: theme ?? this.theme, imageUrl: imageUrl??this.imageUrl,
+      theme: theme ?? this.theme,
+      imageUrl: imageUrl ?? this.imageUrl,
       durationInDays: durationInDays ?? this.durationInDays,
     );
   }
@@ -108,5 +109,5 @@ class CategoryResponse implements DomainMapper<Category> {
       currency: currency ?? '',
       cardType: cardType?.mapToDomain() ?? const CardType(),
       durationInDays: durationInDays ?? 0,
-      theme: theme == null ? DefaultTheme() : GenericTheme.fromTheme(theme!));
+      theme: theme == null ? GoldTheme() : GenericTheme.fromTheme(theme!));
 }

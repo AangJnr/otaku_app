@@ -66,7 +66,7 @@ double getResponsiveExtraLargeFontSize(BuildContext context) =>
     getResponsiveFontSize(context, fontSize: 25);
 
 double getResponsiveMassiveFontSize(BuildContext context) =>
-    getResponsiveFontSize(context, fontSize: 80);
+    getResponsiveFontSize(context, fontSize: 55);
 
 double getResponsiveFontSize(BuildContext context,
     {double? fontSize, double? max}) {

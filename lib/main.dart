@@ -26,12 +26,13 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
 
   runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  static AppTheme appTheme = DefaultTheme();
+  static AppTheme appTheme = GoldTheme();
   const MainApp({super.key});
 
   @override
@@ -41,6 +42,7 @@ class MainApp extends StatelessWidget {
         routerDelegate: stackedRouter.delegate(),
         routeInformationParser: stackedRouter.defaultRouteParser(),
         theme: getTheme(context),
+        debugShowCheckedModeBanner: false,
       ),
     ).animate().fadeIn(
           delay: const Duration(milliseconds: 50),

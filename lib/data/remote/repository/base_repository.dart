@@ -31,8 +31,7 @@ mixin BaseRepository {
             decodedResponseBody['success'].toString() == 'false') {
           return Error(Exception(parseErrors(decodedResponseBody)));
         }
-        getLogger("BaseRepository")
-            .i(decodedResponseBody['data']);
+        getLogger("BaseRepository").i(decodedResponseBody['data']);
         return Success(decodedResponseBody['data']);
       } catch (e) {
         getLogger("Error").e("$e");

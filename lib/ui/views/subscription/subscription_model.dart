@@ -7,7 +7,7 @@ import '../../../app/app.locator.dart';
 import '../../../domain/model/category/category.dart';
 import '../../../domain/model/profile/profile.dart';
 import '../../../domain/repository/user_repository.dart';
-import '../viewmodel.dart';
+import '../base/viewmodel.dart';
 
 class SubscriptionModel extends ViewModel {
   final _userRepository = locator<UserRepository>();
@@ -20,7 +20,7 @@ class SubscriptionModel extends ViewModel {
   void init({String? key, Profile? profile}) async {
     (await runBusyFuture(_userRepository.getCategories())).when((data) {
       _categories = data;
-      setIndex(1);
+      setIndex(0);
       rebuildUi();
     }, (error) {
       getLogger('SubscriptionModel').e(error.toString());
@@ -29,10 +29,10 @@ class SubscriptionModel extends ViewModel {
   }
 
   showError() {
-    routerService.navigateTo(UnknownViewRoute(
+    screenManager.goToUnknownScreen(
         title: "Uh Oh!.",
         message: "Something bad happened\nTry a page refresh?",
-        pageRoute: const SubscriptionViewRoute()));
+        pageRoute: const SubscriptionViewRoute());
   }
 
   void setIndex(int newIndex) {

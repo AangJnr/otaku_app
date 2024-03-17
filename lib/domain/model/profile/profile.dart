@@ -1,7 +1,7 @@
 import 'package:otaku_katarougu_app/data/model/profile_response/profile_response.dart';
 import 'package:otaku_katarougu_app/domain/domain_mapper.dart';
 
-import '../category/category.dart';
+import '../../../config/theme_setup.dart';
 import 'relevant_work.dart';
 import 'socials.dart';
 
@@ -15,10 +15,9 @@ class Profile implements DataMapper<ProfileResponse> {
   final String headerImage;
   final String picture;
   final int pageVisitCount;
-  final String userUid;
-  final String key;
+  final String uid;
   final Socials socials;
-  final Category category;
+  final AppTheme? theme;
   final List<RelevantWork> relevantWorks;
 
   const Profile({
@@ -31,16 +30,17 @@ class Profile implements DataMapper<ProfileResponse> {
     this.headerImage = '',
     this.picture = '',
     this.pageVisitCount = 0,
-    this.userUid = '',
-    this.key = '',
+    this.uid = '',
     this.relevantWorks = const [],
     this.socials = const Socials(),
-    this.category = const Category(),
+    this.theme,
   });
+
+ String  get fullName => "$firstName $lastName";
 
   @override
   String toString() {
-    return 'ProfileResponse(firstName: $firstName, lastName: $lastName, bio: $bio, email: $email, phone: $phone, web: $web, headerImage: $headerImage, picture: $picture, pageVisitCount: $pageVisitCount, userUid: $userUid, key: $key, socials: $socials, categoryUid: $category)';
+    return 'ProfileResponse(firstName: $firstName, lastName: $lastName, bio: $bio, email: $email, phone: $phone, web: $web, headerImage: $headerImage, picture: $picture, pageVisitCount: $pageVisitCount, key: $uid, socials: $socials)';
   }
 
   bool get isIncompleteProfile =>
@@ -57,9 +57,9 @@ class Profile implements DataMapper<ProfileResponse> {
       String? picture,
       int? pageVisitCount,
       String? userUid,
-      String? key,
+      String? uid,
       Socials? socials,
-      Category? category,
+      AppTheme? theme,
       List<RelevantWork>? relevantWorks}) {
     return Profile(
         firstName: firstName ?? this.firstName,
@@ -71,10 +71,9 @@ class Profile implements DataMapper<ProfileResponse> {
         headerImage: headerImage ?? this.headerImage,
         picture: picture ?? this.picture,
         pageVisitCount: pageVisitCount ?? this.pageVisitCount,
-        userUid: userUid ?? this.userUid,
-        key: key ?? this.key,
+        uid: uid ?? this.uid,
         socials: socials ?? this.socials,
-        category: category ?? this.category,
+        theme: theme ?? this.theme,
         relevantWorks: relevantWorks ?? this.relevantWorks);
   }
 
@@ -89,7 +88,6 @@ class Profile implements DataMapper<ProfileResponse> {
       headerImage: headerImage,
       picture: picture,
       pageVisitCount: pageVisitCount,
-      userUid: userUid,
-      key: key,
+      uid: uid,
       socials: socials.mapToApi());
 }

@@ -67,7 +67,7 @@ class AErrorWidget extends StatelessWidget {
           ),
         ),
         verticalSpaceMedium,
-      Row(
+        Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -88,7 +88,7 @@ class AErrorWidget extends StatelessWidget {
               ),
           ],
         ),
-        if (child != null) ...[  verticalSpaceMedium,child!]
+        if (child != null) ...[verticalSpaceMedium, child!]
       ],
     );
   }

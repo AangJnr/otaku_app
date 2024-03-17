@@ -1,11 +1,10 @@
 import 'dart:convert';
+import 'package:otaku_katarougu_app/config/theme_setup.dart';
+import 'package:otaku_katarougu_app/data/model/category_response/theme_response.dart';
 import 'package:otaku_katarougu_app/data/model/profile_response/relevant_work_response.dart';
 import 'package:otaku_katarougu_app/domain/domain_mapper.dart';
 import 'package:otaku_katarougu_app/domain/model/profile/profile.dart';
 import 'package:otaku_katarougu_app/domain/model/profile/socials.dart';
-
-import '../../../domain/model/category/category.dart';
-import '../category_response/category_response.dart';
 import 'socials_response.dart';
 
 class ProfileResponse implements DomainMapper<Profile> {
@@ -18,10 +17,9 @@ class ProfileResponse implements DomainMapper<Profile> {
   final String? headerImage;
   final String? picture;
   final int? pageVisitCount;
-  final String? userUid;
-  final String? key;
+  final String? uid;
   final SocialsResponse? socials;
-  final CategoryResponse? category;
+  final AThemeResponse? theme;
   final List<RelevantWorkResponse>? relevantWorks;
 
   const ProfileResponse(
@@ -34,15 +32,14 @@ class ProfileResponse implements DomainMapper<Profile> {
       this.headerImage,
       this.picture,
       this.pageVisitCount,
-      this.userUid,
-      this.key,
+      this.uid,
       this.socials,
-      this.category,
+      this.theme,
       this.relevantWorks});
 
   @override
   String toString() {
-    return 'ProfileResponse(firstName: $firstName, lastName: $lastName, bio: $bio, email: $email, phone: $phone, web: $web, headerImage: $headerImage, picture: $picture, pageVisitCount: $pageVisitCount, userUid: $userUid, key: $key, socials: $socials, categoryUid: $category)';
+    return 'ProfileResponse(firstName: $firstName, lastName: $lastName, bio: $bio, email: $email, phone: $phone, web: $web, headerImage: $headerImage, picture: $picture, pageVisitCount: $pageVisitCount,  key: $uid, socials: $socials)';
   }
 
   factory ProfileResponse.fromMap(Map<String, dynamic> data) {
@@ -56,14 +53,13 @@ class ProfileResponse implements DomainMapper<Profile> {
       headerImage: data['headerImage'] as String?,
       picture: data['picture'] as String?,
       pageVisitCount: data['pageVisitCount'] as int?,
-      userUid: data['userUid'] as String?,
-      key: data['key'] as String?,
+      uid: data['uid'] as String?,
       socials: data['socials'] == null
           ? null
           : SocialsResponse.fromMap(data['socials'] as Map<String, dynamic>),
-      category: data['category'] == null
+      theme: data['theme'] == null
           ? null
-          : CategoryResponse.fromMap(data['category'] as Map<String, dynamic>),
+          : AThemeResponse.fromMap(data['theme'] as Map<String, dynamic>),
       relevantWorks: data['relevantWorks'] == null
           ? []
           : (data['relevantWorks'] as List<dynamic>)
@@ -82,10 +78,9 @@ class ProfileResponse implements DomainMapper<Profile> {
         'headerImage': headerImage,
         'picture': picture,
         'pageVisitCount': pageVisitCount,
-        'userUid': userUid,
-        'key': key,
+        'key': uid,
         'socials': socials?.toMap(),
-        'category': category?.toMap(),
+        'category': theme?.toMap(),
         'relevantWorks': relevantWorks?.map((e) => e.toMap()).toList()
       };
 
@@ -119,9 +114,9 @@ class ProfileResponse implements DomainMapper<Profile> {
       String? picture,
       int? pageVisitCount,
       String? userUid,
-      String? key,
+      String? uid,
       SocialsResponse? socials,
-      CategoryResponse? category,
+      AThemeResponse? theme,
       List<RelevantWorkResponse>? relevantWorks}) {
     return ProfileResponse(
         firstName: firstName ?? this.firstName,
@@ -133,10 +128,9 @@ class ProfileResponse implements DomainMapper<Profile> {
         headerImage: headerImage ?? this.headerImage,
         picture: picture ?? this.picture,
         pageVisitCount: pageVisitCount ?? this.pageVisitCount,
-        userUid: userUid ?? this.userUid,
-        key: key ?? this.key,
+        uid: uid ?? this.uid,
         socials: socials ?? this.socials,
-        category: category ?? this.category,
+        theme: theme ?? this.theme,
         relevantWorks: relevantWorks ?? this.relevantWorks);
   }
 
@@ -151,9 +145,8 @@ class ProfileResponse implements DomainMapper<Profile> {
       headerImage: headerImage ?? '',
       picture: picture ?? '',
       pageVisitCount: pageVisitCount ?? 0,
-      userUid: userUid ?? '',
-      key: key ?? '',
+      uid: uid ?? '',
       socials: socials?.mapToDomain() ?? const Socials(),
-      category: category?.mapToDomain() ?? const Category(),
+      theme: theme == null ? SilverTheme() : GenericTheme.fromTheme(theme!),
       relevantWorks: relevantWorks?.map((e) => e.mapToDomain()).toList() ?? []);
 }

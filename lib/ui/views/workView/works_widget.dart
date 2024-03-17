@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:otaku_katarougu_app/ui/widgets/relevant_work_item.dart';
 
- import '../../common/ui_helpers.dart';
+import '../../common/ui_helpers.dart';
 import '../../widgets/footer/footer_widget.dart';
 import 'work_viewmodel.dart';
 
@@ -28,10 +28,12 @@ class WorkViewWidget extends StatelessWidget {
           ),
           verticalSpaceLarge,
           ...viewModel.profile.relevantWorks
-              .map((e) => RelevantWorkItem(e, appTheme: viewModel.appTheme,))
+              .map((e) => RelevantWorkItem(
+                    e,
+                    appTheme: viewModel.appTheme,
+                  ))
               .toList(),
           verticalSpaceLarge,
-
           const FooterWidget(),
           verticalSpaceLarge,
         ],

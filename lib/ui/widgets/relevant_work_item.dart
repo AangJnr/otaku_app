@@ -12,7 +12,7 @@ class RelevantWorkItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = appTheme ?? DefaultTheme();
+    final theme = appTheme ?? SilverTheme();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -21,7 +21,9 @@ class RelevantWorkItem extends StatelessWidget {
           relevantWork.title,
           textAlign: TextAlign.left,
           style: Theme.of(context).primaryTextTheme.titleMedium?.copyWith(
-              color: theme.primaryTextColor, fontWeight: FontWeight.w900,     fontSize: 28,
+                color: theme.primaryTextColor,
+                fontWeight: FontWeight.w900,
+                fontSize: 28,
               ),
         ),
         verticalSpaceSmall,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:otaku_katarougu_app/ui/views/viewmodel.dart';
+import 'package:otaku_katarougu_app/ui/views/base/viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class LoadingWidget extends StackedView<LoadingViewModel> {
